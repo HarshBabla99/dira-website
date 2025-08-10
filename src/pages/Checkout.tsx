@@ -178,7 +178,7 @@ const Checkout = () => {
         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12">
           <section aria-labelledby="checkout-title">
             <h1 id="checkout-title" className="heading-md">Checkout</h1>
-            <form onSubmit={onSubmit} className="mt-6 space-y-6">
+            <form onSubmit={onSubmit} className="mt-6 space-y-6 pb-24">
               <div className="grid md:grid-cols-2 gap-4">
                 <label className="flex flex-col gap-2 text-sm">
                   Full name
@@ -273,27 +273,11 @@ const Checkout = () => {
                 </div>
               </fieldset>
 
-              {/* Mock card fields retained for visual parity; not used when Mobile Banking is selected */}
-              <div className="grid md:grid-cols-3 gap-4">
-                <label className="flex flex-col gap-2 text-sm md:col-span-2">
-                  Card number (mock)
-                  <input name="cardNumber" required className="border rounded-md px-4 py-3 bg-background" placeholder="4242 4242 4242 4242" />
-                </label>
-                <div className="grid grid-cols-2 gap-4">
-                  <label className="flex flex-col gap-2 text-sm">
-                    Expiry
-                    <input name="expiry" required className="border rounded-md px-4 py-3 bg-background" placeholder="MM/YY" />
-                  </label>
-                  <label className="flex flex-col gap-2 text-sm">
-                    CVC
-                    <input name="cvc" required className="border rounded-md px-4 py-3 bg-background" placeholder="123" />
-                  </label>
-                </div>
+              <div className="sticky bottom-0 z-10 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-t pt-4">
+                <button disabled={submitting || items.length === 0} className="btn w-full">
+                  {submitting ? 'Processing…' : `Place Order — $${total.toFixed(2)}`}
+                </button>
               </div>
-
-              <button disabled={submitting || items.length === 0} className="btn w-full">
-                {submitting ? 'Processing…' : `Place Order — $${total.toFixed(2)}`}
-              </button>
             </form>
           </section>
           <aside className="card-lux h-max">
