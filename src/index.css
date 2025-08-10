@@ -8,44 +8,44 @@
 @layer base {
   :root {
     /* Warm neutral palette */
-    --background: 40 33% 98%; /* ivory */
-    --foreground: 24 18% 15%; /* deep taupe */
+    --background: 35 45% 97%; /* coral sand */
+    --foreground: 26 24% 16%; /* earthy deep taupe */
 
-    --card: 40 33% 99%;
-    --card-foreground: 24 18% 15%;
+    --card: 35 45% 98%;
+    --card-foreground: 26 24% 16%;
 
-    --popover: 40 33% 99%;
-    --popover-foreground: 24 18% 15%;
+    --popover: 35 45% 98%;
+    --popover-foreground: 26 24% 16%;
 
-    --primary: 28 20% 25%; /* rich taupe */
-    --primary-foreground: 45 29% 97%; /* near-ivory */
+    --primary: 188 40% 24%; /* dhow teal */
+    --primary-foreground: 45 25% 96%; /* warm ivory */
 
-    --secondary: 38 24% 94%; /* warm cream */
-    --secondary-foreground: 24 18% 15%;
+    --secondary: 42 35% 92%; /* savannah cream */
+    --secondary-foreground: 26 24% 16%;
 
-    --muted: 38 20% 92%;
-    --muted-foreground: 25 10% 35%;
+    --muted: 35 25% 90%;
+    --muted-foreground: 26 10% 38%;
 
-    --accent: 45 70% 55%; /* muted gold */
-    --accent-foreground: 28 25% 18%;
+    --accent: 18 55% 46%; /* spice terracotta */
+    --accent-foreground: 26 24% 16%;
 
-    --destructive: 2 84% 60%;
-    --destructive-foreground: 45 29% 97%;
+    --destructive: 2 84% 58%;
+    --destructive-foreground: 45 25% 96%;
 
-    --border: 28 15% 85%;
-    --input: 28 15% 85%;
-    --ring: 45 70% 40%;
+    --border: 30 18% 82%;
+    --input: 30 18% 82%;
+    --ring: 188 35% 36%; /* teal focus ring */
 
     --radius: 0.75rem;
 
-    --sidebar-background: 40 33% 98%;
-    --sidebar-foreground: 24 18% 15%;
-    --sidebar-primary: 28 20% 25%;
-    --sidebar-primary-foreground: 45 29% 97%;
-    --sidebar-accent: 38 24% 94%;
-    --sidebar-accent-foreground: 24 18% 15%;
-    --sidebar-border: 28 15% 85%;
-    --sidebar-ring: 45 70% 40%;
+    --sidebar-background: 35 45% 97%;
+    --sidebar-foreground: 26 24% 16%;
+    --sidebar-primary: 188 40% 24%;
+    --sidebar-primary-foreground: 45 25% 96%;
+    --sidebar-accent: 42 35% 92%;
+    --sidebar-accent-foreground: 26 24% 16%;
+    --sidebar-border: 30 18% 82%;
+    --sidebar-ring: 188 35% 36%;
 
     /* Typography */
     --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
@@ -53,42 +53,42 @@
   }
 
   .dark {
-    --background: 28 16% 12%;
-    --foreground: 45 29% 97%;
+    --background: 198 30% 12%; /* deep ocean */
+    --foreground: 42 25% 92%; /* warm ivory */
 
-    --card: 28 16% 14%;
-    --card-foreground: 45 29% 97%;
+    --card: 198 28% 14%;
+    --card-foreground: 42 25% 92%;
 
-    --popover: 28 16% 14%;
-    --popover-foreground: 45 29% 97%;
+    --popover: 198 28% 14%;
+    --popover-foreground: 42 25% 92%;
 
-    --primary: 45 70% 55%; /* gold accent for dark */
-    --primary-foreground: 28 25% 15%;
+    --primary: 42 70% 55%; /* savannah gold accent */
+    --primary-foreground: 26 25% 15%;
 
-    --secondary: 28 16% 18%;
-    --secondary-foreground: 45 29% 97%;
+    --secondary: 198 22% 18%;
+    --secondary-foreground: 42 25% 92%;
 
-    --muted: 28 16% 18%;
-    --muted-foreground: 35 10% 70%;
+    --muted: 198 22% 18%;
+    --muted-foreground: 42 10% 72%;
 
-    --accent: 45 70% 55%;
-    --accent-foreground: 28 25% 15%;
+    --accent: 18 60% 50%; /* spice terracotta */
+    --accent-foreground: 26 25% 15%;
 
-    --destructive: 2 62% 40%;
-    --destructive-foreground: 45 29% 97%;
+    --destructive: 2 62% 44%;
+    --destructive-foreground: 42 25% 92%;
 
-    --border: 28 16% 22%;
-    --input: 28 16% 22%;
-    --ring: 45 70% 55%;
+    --border: 198 18% 22%;
+    --input: 198 18% 22%;
+    --ring: 42 70% 55%;
 
-    --sidebar-background: 28 16% 12%;
-    --sidebar-foreground: 45 29% 97%;
-    --sidebar-primary: 45 70% 55%;
-    --sidebar-primary-foreground: 28 25% 15%;
-    --sidebar-accent: 28 16% 18%;
-    --sidebar-accent-foreground: 45 29% 97%;
-    --sidebar-border: 28 16% 18%;
-    --sidebar-ring: 45 70% 55%;
+    --sidebar-background: 198 30% 12%;
+    --sidebar-foreground: 42 25% 92%;
+    --sidebar-primary: 42 70% 55%;
+    --sidebar-primary-foreground: 26 25% 15%;
+    --sidebar-accent: 198 22% 18%;
+    --sidebar-accent-foreground: 42 25% 92%;
+    --sidebar-border: 198 18% 22%;
+    --sidebar-ring: 42 70% 55%;
   }
 }
 
