@@ -1,23 +1,174 @@
 import BrandHeader from "@/components/BrandHeader";
 import Footer from "@/components/Footer";
 import { useCart } from "@/context/CartContext";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "@/components/ui/use-toast";
+
+// NOTE: Replace with your shop's WhatsApp number in E.164 format (no + sign), e.g., "255712345678"
+// In production, consider storing this in Supabase secrets and reading it via an Edge Function.
+const SHOP_WHATSAPP_NUMBER = "REPLACE_WITH_E164_NUMBER";
+
+type PaymentMethod = "cod" | "mobile";
+type MobileWallet = "airtel" | "tigo" | "mpesa";
+
+const buildWhatsAppLink = (phone: string, message: string) =>
+  `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
 const Checkout = () => {
   const { items, total, clear } = useCart();
   const [submitting, setSubmitting] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
+  const [mobileWallet, setMobileWallet] = useState<MobileWallet | null>(null);
   const navigate = useNavigate();
+
+  // Basic SEO tags
+  useEffect(() => {
+    document.title = "Checkout | Dira Naturals – Luxe Lather";
+    const descContent =
+      "Secure, minimalist checkout for Dira Naturals artisanal soaps. Pay on Delivery or Mobile Banking.";
+
+    let metaDesc = document.querySelector<HTMLMetaElement>(
+      'meta[name="description"]'
+    );
+    if (!metaDesc) {
+      metaDesc = document.createElement("meta");
+      metaDesc.setAttribute("name", "description");
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute("content", descContent);
+
+    // Canonical tag
+    let canonical = document.querySelector<HTMLLinkElement>(
+      'link[rel="canonical"]'
+    );
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", window.location.href);
+  }, []);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (items.length === 0) return;
+
+    // Pull form values from the uncontrolled inputs
+    const fd = new FormData(e.currentTarget);
+    const fullName = String(fd.get("fullName") || "").trim();
+    const email = String(fd.get("email") || "").trim();
+    const address = String(fd.get("address") || "").trim();
+    const city = String(fd.get("city") || "").trim();
+    const state = String(fd.get("state") || "").trim();
+    const zip = String(fd.get("zip") || "").trim();
+
+    const orderLines = items
+      .map(
+        (i) => `${i.name} x${i.quantity} - $${(i.price * i.quantity).toFixed(2)}`
+      )
+      .join("\n");
+
+    const baseDetails = `Customer: ${fullName}\nEmail: ${email}\nAddress: ${address}, ${city}, ${state} ${zip}`;
+
+    const ensureShopNumber = (): string | null => {
+      if (!SHOP_WHATSAPP_NUMBER || SHOP_WHATSAPP_NUMBER.startsWith("REPLACE_WITH")) {
+        toast({
+          title: "WhatsApp number missing",
+          description:
+            "Set SHOP_WHATSAPP_NUMBER in Checkout.tsx to your shop's E.164 number.",
+          variant: "destructive",
+        });
+        // Optional: prompt to continue in dev/testing
+        const entered = window.prompt(
+          "Enter shop WhatsApp number in E.164 format (e.g., 255712345678):"
+        );
+        return entered && entered.trim() ? entered.trim() : null;
+      }
+      return SHOP_WHATSAPP_NUMBER;
+    };
+
+    const phone = ensureShopNumber();
+    if (!phone) return;
+
     setSubmitting(true);
-    setTimeout(() => {
-      clear();
-      setSubmitting(false);
-      alert("Thank you! Your order has been placed (mock). A confirmation email will be sent shortly.");
-      navigate("/");
-    }, 900);
+
+    if (paymentMethod === "cod") {
+      const message = [
+        "New Order – Pay on Delivery",
+        baseDetails,
+        "",
+        "Items:",
+        orderLines,
+        "",
+        `Total: $${total.toFixed(2)}`,
+        "Payment Method: Pay on Delivery",
+      ].join("\n");
+
+      const url = buildWhatsAppLink(phone, message);
+      window.open(url, "_blank");
+      toast({ title: "WhatsApp opened", description: "Please confirm the order in WhatsApp." });
+
+      setTimeout(() => {
+        clear();
+        setSubmitting(false);
+        navigate("/");
+      }, 900);
+      return;
+    }
+
+    // Mobile banking mock flow
+    if (paymentMethod === "mobile") {
+      if (!mobileWallet) {
+        toast({
+          title: "Select a wallet",
+          description: "Choose Airtel Money, Tigo Pesa, or MPesa.",
+          variant: "destructive",
+        });
+        setSubmitting(false);
+        return;
+      }
+
+      // TODO: Replace this block with real mobile money API calls via a Supabase Edge Function.
+      // Suggested approach:
+      // 1) Create an Edge Function per wallet (e.g., /functions/airtel-collect, /functions/mpesa-c2b)
+      // 2) Store API keys and credentials in Supabase Secrets
+      // 3) Call the function here with fetch, passing order + customer details
+      // 4) Use the response to get a real transaction ID and status
+
+      const txId = `${mobileWallet.toUpperCase()}-${Math.random()
+        .toString(36)
+        .slice(2, 8)
+        .toUpperCase()}-${Date.now().toString(36).toUpperCase()}`;
+
+      toast({
+        title: "Mock payment initiated",
+        description: `${mobileWallet.toUpperCase()} transaction ${txId}`,
+      });
+
+      const message = [
+        "New Order – Mobile Banking",
+        baseDetails,
+        "",
+        "Items:",
+        orderLines,
+        "",
+        `Total: $${total.toFixed(2)}`,
+        `Wallet: ${mobileWallet.toUpperCase()}`,
+        `Transaction ID: ${txId}`,
+      ].join("\n");
+
+      const url = buildWhatsAppLink(phone, message);
+      window.open(url, "_blank");
+
+      setTimeout(() => {
+        clear();
+        setSubmitting(false);
+        navigate("/");
+      }, 900);
+
+      return;
+    }
   };
 
   return (
@@ -31,47 +182,115 @@ const Checkout = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <label className="flex flex-col gap-2 text-sm">
                   Full name
-                  <input required className="border rounded-md px-4 py-3 bg-background" placeholder="Jane Doe" />
+                  <input name="fullName" required className="border rounded-md px-4 py-3 bg-background" placeholder="Jane Doe" />
                 </label>
                 <label className="flex flex-col gap-2 text-sm">
                   Email
-                  <input type="email" required className="border rounded-md px-4 py-3 bg-background" placeholder="jane@example.com" />
+                  <input name="email" type="email" required className="border rounded-md px-4 py-3 bg-background" placeholder="jane@example.com" />
                 </label>
               </div>
               <label className="flex flex-col gap-2 text-sm">
                 Address
-                <input required className="border rounded-md px-4 py-3 bg-background" placeholder="123 Serenity Lane" />
+                <input name="address" required className="border rounded-md px-4 py-3 bg-background" placeholder="123 Serenity Lane" />
               </label>
               <div className="grid md:grid-cols-3 gap-4">
                 <label className="flex flex-col gap-2 text-sm">
                   City
-                  <input required className="border rounded-md px-4 py-3 bg-background" placeholder="San Francisco" />
+                  <input name="city" required className="border rounded-md px-4 py-3 bg-background" placeholder="San Francisco" />
                 </label>
                 <label className="flex flex-col gap-2 text-sm">
                   State
-                  <input required className="border rounded-md px-4 py-3 bg-background" placeholder="CA" />
+                  <input name="state" required className="border rounded-md px-4 py-3 bg-background" placeholder="CA" />
                 </label>
                 <label className="flex flex-col gap-2 text-sm">
                   ZIP
-                  <input required className="border rounded-md px-4 py-3 bg-background" placeholder="94107" />
+                  <input name="zip" required className="border rounded-md px-4 py-3 bg-background" placeholder="94107" />
                 </label>
               </div>
+
+              {/* Payment Options */}
+              <fieldset className="border rounded-md p-4">
+                <legend className="text-sm font-medium">Payment</legend>
+
+                <div className="mt-3 space-y-3">
+                  <label className="flex items-center gap-3 text-sm">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="cod"
+                      checked={paymentMethod === "cod"}
+                      onChange={() => setPaymentMethod("cod")}
+                    />
+                    <span>Pay on Delivery (WhatsApp)</span>
+                  </label>
+
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-3 text-sm">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="mobile"
+                        checked={paymentMethod === "mobile"}
+                        onChange={() => setPaymentMethod("mobile")}
+                      />
+                      <span>Mobile Banking</span>
+                    </label>
+                    {paymentMethod === "mobile" && (
+                      <div className="ml-6 grid sm:grid-cols-3 gap-3">
+                        <label className="flex items-center gap-2 text-xs">
+                          <input
+                            type="radio"
+                            name="wallet"
+                            value="airtel"
+                            checked={mobileWallet === "airtel"}
+                            onChange={() => setMobileWallet("airtel")}
+                          />
+                          Airtel Money
+                        </label>
+                        <label className="flex items-center gap-2 text-xs">
+                          <input
+                            type="radio"
+                            name="wallet"
+                            value="tigo"
+                            checked={mobileWallet === "tigo"}
+                            onChange={() => setMobileWallet("tigo")}
+                          />
+                          Tigo Pesa
+                        </label>
+                        <label className="flex items-center gap-2 text-xs">
+                          <input
+                            type="radio"
+                            name="wallet"
+                            value="mpesa"
+                            checked={mobileWallet === "mpesa"}
+                            onChange={() => setMobileWallet("mpesa")}
+                          />
+                          MPesa
+                        </label>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </fieldset>
+
+              {/* Mock card fields retained for visual parity; not used when Mobile Banking is selected */}
               <div className="grid md:grid-cols-3 gap-4">
                 <label className="flex flex-col gap-2 text-sm md:col-span-2">
                   Card number (mock)
-                  <input required className="border rounded-md px-4 py-3 bg-background" placeholder="4242 4242 4242 4242" />
+                  <input name="cardNumber" required className="border rounded-md px-4 py-3 bg-background" placeholder="4242 4242 4242 4242" />
                 </label>
                 <div className="grid grid-cols-2 gap-4">
                   <label className="flex flex-col gap-2 text-sm">
                     Expiry
-                    <input required className="border rounded-md px-4 py-3 bg-background" placeholder="MM/YY" />
+                    <input name="expiry" required className="border rounded-md px-4 py-3 bg-background" placeholder="MM/YY" />
                   </label>
                   <label className="flex flex-col gap-2 text-sm">
                     CVC
-                    <input required className="border rounded-md px-4 py-3 bg-background" placeholder="123" />
+                    <input name="cvc" required className="border rounded-md px-4 py-3 bg-background" placeholder="123" />
                   </label>
                 </div>
               </div>
+
               <button disabled={submitting || items.length === 0} className="btn w-full">
                 {submitting ? 'Processing…' : `Place Order — $${total.toFixed(2)}`}
               </button>
