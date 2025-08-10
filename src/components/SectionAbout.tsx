@@ -1,6 +1,6 @@
 const SectionAbout = () => {
   return (
-    <section id="about" aria-labelledby="about-title" className="section">
+    <section id="about" aria-labelledby="about-title" className="section scroll-mt-16 md:scroll-mt-20">
       <div className="container mx-auto px-6 grid md:grid-cols-12 gap-10 items-center">
         <div className="md:col-span-6">
           <h2 id="about-title" className="heading-md">Artisanal. Sustainable. Pure.</h2>

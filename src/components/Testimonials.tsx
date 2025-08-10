@@ -15,7 +15,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <section id="testimonials" aria-labelledby="testimonials-title" className="section bg-secondary/50 border-y">
+    <section id="testimonials" aria-labelledby="testimonials-title" className="section scroll-mt-16 md:scroll-mt-20 bg-secondary/50 border-y">
       <div className="container mx-auto px-6">
         <h2 id="testimonials-title" className="heading-md">Kind Words</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
