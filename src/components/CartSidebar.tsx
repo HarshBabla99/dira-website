@@ -14,12 +14,12 @@ const CartSidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`absolute right-0 top-0 h-full w-full sm:w-[420px] bg-background border-l shadow-xl ${isOpen ? 'animate-slide-in-right' : 'animate-slide-out-right'}`}
+        className={`absolute right-0 top-0 h-full w-full sm:w-[420px] bg-background border-l shadow-xl transform transition-transform ${isOpen ? 'translate-x-0 animate-slide-in-right' : 'translate-x-full animate-slide-out-right'}`}
         aria-label="Shopping cart"
       >
         <div className="flex items-center justify-between p-6 border-b">
           <h3 className="font-serif text-lg">Your Cart</h3>
-          <button onClick={closeCart} className="btn-ghost">Close</button>
+          <button type="button" onClick={closeCart} className="btn-ghost">Close</button>
         </div>
         <div className="p-6 space-y-6 overflow-y-auto h-[calc(100%-180px)]">
           {items.length === 0 ? (
