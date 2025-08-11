@@ -71,25 +71,17 @@ const Checkout = () => {
 
     const baseDetails = `Customer: ${fullName}\nEmail: ${email}\nAddress: ${address}, ${city}, ${state} ${zip}`;
 
-    const ensureShopNumber = (): string | null => {
-      if (!SHOP_WHATSAPP_NUMBER || SHOP_WHATSAPP_NUMBER.startsWith("REPLACE_WITH")) {
-        toast({
-          title: "WhatsApp number missing",
-          description:
-            "Set SHOP_WHATSAPP_NUMBER in Checkout.tsx to your shop's E.164 number.",
-          variant: "destructive",
-        });
-        // Optional: prompt to continue in dev/testing
-        const entered = window.prompt(
-          "Enter shop WhatsApp number in E.164 format (e.g., 255712345678):"
-        );
-        return entered && entered.trim() ? entered.trim() : null;
-      }
-      return SHOP_WHATSAPP_NUMBER;
-    };
-
-    const phone = ensureShopNumber();
-    if (!phone) return;
+    // Resolve shop WhatsApp number; abort if not configured
+    const phone = SHOP_WHATSAPP_NUMBER;
+    if (!phone || phone.startsWith("REPLACE_WITH")) {
+      toast({
+        title: "WhatsApp number not configured",
+        description:
+          "Open src/pages/Checkout.tsx and set SHOP_WHATSAPP_NUMBER to your shop's E.164 number (e.g., 255712345678).",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setSubmitting(true);
 
