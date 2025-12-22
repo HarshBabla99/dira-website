@@ -42,7 +42,7 @@ const CartSidebar = () => {
             <p className="text-base text-muted-foreground">{t("emptyCart")}</p>
           ) : (
             items.map((item) => (
-              <div key={item.id} className="flex gap-3 border-b border-border/50 pb-3">
+              <div key={item.id} className="flex items-center gap-3 border-b border-border/50 pb-3">
                 <img src={item.image} alt={item.alt} className="h-14 w-14 rounded-md border object-cover flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-base font-medium leading-tight truncate">{item.name}</p>
