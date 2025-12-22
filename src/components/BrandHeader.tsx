@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { ShoppingBag, Store, Languages } from "lucide-react";
+import { ShoppingBag, Store, Languages, Leaf } from "lucide-react";
 
 const BrandHeader = () => {
   const { openCart, items } = useCart();
@@ -11,8 +11,11 @@ const BrandHeader = () => {
   return (
     <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b">
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="font-serif text-xl tracking-wide">Dira Naturals</Link>
-        <nav className="hidden md:flex items-center gap-8 text-sm">
+        <Link to="/" className="flex items-center gap-2 font-serif text-xl tracking-wide">
+          <Leaf className="h-5 w-5 text-primary" />
+          Dira Naturals
+        </Link>
+        <nav className="hidden md:flex items-center gap-8 text-base">
           <a href="#about" className="story-link">{t("about")}</a>
           <a href="#featured" className="story-link">{t("featured")}</a>
           <a href="#testimonials" className="story-link">{t("testimonials")}</a>
