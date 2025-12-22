@@ -222,49 +222,49 @@ const Checkout = () => {
                 </label>
               </div>
 
-              {/* Delivery Options */}
-              <div className="space-y-3">
-                <span className="text-sm font-medium">Delivery Method</span>
-                <div className="flex gap-4">
-                  <label className="flex items-center gap-3 text-sm">
-                    <input
-                      type="radio"
-                      name="deliveryMethod"
-                      value="delivery"
-                      checked={deliveryMethod === "delivery"}
-                      onChange={() => setDeliveryMethod("delivery")}
-                    />
-                    <span>Delivery (+${DELIVERY_FEE.toFixed(2)})</span>
-                  </label>
-                  <label className="flex items-center gap-3 text-sm">
-                    <input
-                      type="radio"
-                      name="deliveryMethod"
-                      value="pickup"
-                      checked={deliveryMethod === "pickup"}
-                      onChange={() => setDeliveryMethod("pickup")}
-                    />
-                    <span>Pickup (Free)</span>
-                  </label>
+              {/* Delivery & Payment Options - Side by side */}
+              <div className="grid md:grid-cols-2 gap-4">
+                {/* Delivery Options */}
+                <div className="space-y-2">
+                  <span className="text-sm font-medium">Delivery Method</span>
+                  <div className="border rounded-md p-4 space-y-3">
+                    <label className="flex items-center gap-3 text-sm">
+                      <input
+                        type="radio"
+                        name="deliveryMethod"
+                        value="delivery"
+                        checked={deliveryMethod === "delivery"}
+                        onChange={() => setDeliveryMethod("delivery")}
+                      />
+                      <span>Delivery (+${DELIVERY_FEE.toFixed(2)})</span>
+                    </label>
+                    <label className="flex items-center gap-3 text-sm">
+                      <input
+                        type="radio"
+                        name="deliveryMethod"
+                        value="pickup"
+                        checked={deliveryMethod === "pickup"}
+                        onChange={() => setDeliveryMethod("pickup")}
+                      />
+                      <span>Pickup (Free)</span>
+                    </label>
+                  </div>
                 </div>
-              </div>
 
-              {/* Payment Options */}
-              <div className="space-y-3">
-                <span className="text-sm font-medium">Payment</span>
-                <div className="border rounded-md p-4 space-y-3">
-                  <label className="flex items-center gap-3 text-sm">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="cod"
-                      checked={paymentMethod === "cod"}
-                      onChange={() => setPaymentMethod("cod")}
-                    />
-                    <span>Pay on Delivery (WhatsApp)</span>
-                  </label>
-
-                  <div className="space-y-2">
+                {/* Payment Options */}
+                <div className="space-y-2">
+                  <span className="text-sm font-medium">Payment</span>
+                  <div className="border rounded-md p-4 space-y-3">
+                    <label className="flex items-center gap-3 text-sm">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="cod"
+                        checked={paymentMethod === "cod"}
+                        onChange={() => setPaymentMethod("cod")}
+                      />
+                      <span>Pay on Delivery</span>
+                    </label>
                     <label className="flex items-center gap-3 text-sm">
                       <input
                         type="radio"
@@ -275,43 +275,48 @@ const Checkout = () => {
                       />
                       <span>Mobile Banking</span>
                     </label>
-                    {paymentMethod === "mobile" && (
-                      <div className="ml-6 grid sm:grid-cols-3 gap-3">
-                        <label className="flex items-center gap-2 text-xs">
-                          <input
-                            type="radio"
-                            name="wallet"
-                            value="airtel"
-                            checked={mobileWallet === "airtel"}
-                            onChange={() => setMobileWallet("airtel")}
-                          />
-                          Airtel Money
-                        </label>
-                        <label className="flex items-center gap-2 text-xs">
-                          <input
-                            type="radio"
-                            name="wallet"
-                            value="tigo"
-                            checked={mobileWallet === "tigo"}
-                            onChange={() => setMobileWallet("tigo")}
-                          />
-                          Tigo Pesa
-                        </label>
-                        <label className="flex items-center gap-2 text-xs">
-                          <input
-                            type="radio"
-                            name="wallet"
-                            value="mpesa"
-                            checked={mobileWallet === "mpesa"}
-                            onChange={() => setMobileWallet("mpesa")}
-                          />
-                          MPesa
-                        </label>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
+
+              {/* Mobile Wallet Selection - Shows when Mobile Banking selected */}
+              {paymentMethod === "mobile" && (
+                <div className="space-y-2">
+                  <span className="text-sm font-medium">Select Wallet</span>
+                  <div className="border rounded-md p-4 flex flex-wrap gap-4">
+                    <label className="flex items-center gap-2 text-sm">
+                      <input
+                        type="radio"
+                        name="wallet"
+                        value="airtel"
+                        checked={mobileWallet === "airtel"}
+                        onChange={() => setMobileWallet("airtel")}
+                      />
+                      Airtel Money
+                    </label>
+                    <label className="flex items-center gap-2 text-sm">
+                      <input
+                        type="radio"
+                        name="wallet"
+                        value="tigo"
+                        checked={mobileWallet === "tigo"}
+                        onChange={() => setMobileWallet("tigo")}
+                      />
+                      Tigo Pesa
+                    </label>
+                    <label className="flex items-center gap-2 text-sm">
+                      <input
+                        type="radio"
+                        name="wallet"
+                        value="mpesa"
+                        checked={mobileWallet === "mpesa"}
+                        onChange={() => setMobileWallet("mpesa")}
+                      />
+                      MPesa
+                    </label>
+                  </div>
+                </div>
+              )}
 
             </form>
           </section>
