@@ -7,68 +7,20 @@ import { toast } from "@/components/ui/use-toast";
 
 // NOTE: Replace with your shop's WhatsApp number in E.164 format (no + sign), e.g., "255712345678"
 // In production, consider storing this in Supabase secrets and reading it via an Edge Function.
-const SHOP_WHATSAPP_NUMBER = "REPLACE_WITH_E164_NUMBER";
+const SHOP_WHATSAPP_NUMBER = "255695234234";
 
 type PaymentMethod = "cod" | "mobile";
 type MobileWallet = "airtel" | "tigo" | "mpesa";
-type DeliveryMethod = "delivery" | "pickup";
-
-const DELIVERY_FEE = 5.00;
-const VAT_RATE = 0.18;
-
-// Promo codes - in production, validate these via backend
-const PROMO_CODES: Record<string, { discount: number; type: "percent" | "fixed"; label: string }> = {
-  "WELCOME10": { discount: 10, type: "percent", label: "10% off" },
-  "SAVE5": { discount: 5, type: "fixed", label: "$5 off" },
-  "LUXURY20": { discount: 20, type: "percent", label: "20% off" },
-};
 
 const buildWhatsAppLink = (phone: string, message: string) =>
   `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
 const Checkout = () => {
-  const { items, total } = useCart();
+  const { items, total, clear } = useCart();
   const [submitting, setSubmitting] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
   const [mobileWallet, setMobileWallet] = useState<MobileWallet | null>(null);
-  const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod>("delivery");
-  const [promoCode, setPromoCode] = useState("");
-  const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { clear } = useCart();
-
-  // Calculate discount
-  const getDiscount = () => {
-    if (!appliedPromo || !PROMO_CODES[appliedPromo]) return 0;
-    const promo = PROMO_CODES[appliedPromo];
-    if (promo.type === "percent") {
-      return total * (promo.discount / 100);
-    }
-    return Math.min(promo.discount, total); // Don't discount more than subtotal
-  };
-
-  const applyPromoCode = () => {
-    const code = promoCode.trim().toUpperCase();
-    if (PROMO_CODES[code]) {
-      setAppliedPromo(code);
-      toast({ title: "Promo applied!", description: PROMO_CODES[code].label });
-    } else {
-      toast({ title: "Invalid code", description: "This promo code is not valid.", variant: "destructive" });
-    }
-  };
-
-  const removePromo = () => {
-    setAppliedPromo(null);
-    setPromoCode("");
-  };
-
-  // Calculate totals
-  const discount = getDiscount();
-  const deliveryFee = deliveryMethod === "delivery" ? DELIVERY_FEE : 0;
-  const subtotal = total;
-  const discountedSubtotal = subtotal - discount;
-  const vatAmount = (discountedSubtotal + deliveryFee) * VAT_RATE;
-  const grandTotal = discountedSubtotal + deliveryFee + vatAmount;
 
   // Basic SEO tags
   useEffect(() => {
@@ -76,9 +28,7 @@ const Checkout = () => {
     const descContent =
       "Secure, minimalist checkout for Dira Naturals artisanal soaps. Pay on Delivery or Mobile Banking.";
 
-    let metaDesc = document.querySelector<HTMLMetaElement>(
-      'meta[name="description"]'
-    );
+    let metaDesc = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     if (!metaDesc) {
       metaDesc = document.createElement("meta");
       metaDesc.setAttribute("name", "description");
@@ -87,9 +37,7 @@ const Checkout = () => {
     metaDesc.setAttribute("content", descContent);
 
     // Canonical tag
-    let canonical = document.querySelector<HTMLLinkElement>(
-      'link[rel="canonical"]'
-    );
+    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement("link");
       canonical.setAttribute("rel", "canonical");
@@ -111,11 +59,7 @@ const Checkout = () => {
     const state = String(fd.get("state") || "").trim();
     const zip = String(fd.get("zip") || "").trim();
 
-    const orderLines = items
-      .map(
-        (i) => `${i.name} x${i.quantity} - $${(i.price * i.quantity).toFixed(2)}`
-      )
-      .join("\n");
+    const orderLines = items.map((i) => `${i.name} x${i.quantity} - $${(i.price * i.quantity).toFixed(2)}`).join("\n");
 
     const baseDetails = `Customer: ${fullName}\nEmail: ${email}\nAddress: ${address}, ${city}, ${state} ${zip}`;
 
@@ -133,10 +77,6 @@ const Checkout = () => {
 
     setSubmitting(true);
 
-    const deliveryInfo = deliveryMethod === "delivery" 
-      ? `Delivery Method: Delivery (+$${DELIVERY_FEE.toFixed(2)})`
-      : "Delivery Method: Pickup";
-
     if (paymentMethod === "cod") {
       const message = [
         "New Order – Pay on Delivery",
@@ -145,10 +85,7 @@ const Checkout = () => {
         "Items:",
         orderLines,
         "",
-        `Subtotal: $${subtotal.toFixed(2)}`,
-        deliveryInfo,
-        `VAT (18%): $${vatAmount.toFixed(2)}`,
-        `Total: $${grandTotal.toFixed(2)}`,
+        `Total: $${total.toFixed(2)}`,
         "Payment Method: Pay on Delivery",
       ].join("\n");
 
@@ -159,19 +96,7 @@ const Checkout = () => {
       setTimeout(() => {
         clear();
         setSubmitting(false);
-        navigate("/order-confirmation", {
-          state: {
-            items: items.map(i => ({ name: i.name, quantity: i.quantity, price: i.price })),
-            subtotal,
-            discount,
-            deliveryFee,
-            vat: vatAmount,
-            total: grandTotal,
-            deliveryMethod,
-            paymentMethod: "pay_on_delivery",
-            promoCode: appliedPromo,
-          }
-        });
+        navigate("/");
       }, 900);
       return;
     }
@@ -212,10 +137,7 @@ const Checkout = () => {
         "Items:",
         orderLines,
         "",
-        `Subtotal: $${subtotal.toFixed(2)}`,
-        deliveryInfo,
-        `VAT (18%): $${vatAmount.toFixed(2)}`,
-        `Total: $${grandTotal.toFixed(2)}`,
+        `Total: $${total.toFixed(2)}`,
         `Wallet: ${mobileWallet.toUpperCase()}`,
         `Transaction ID: ${txId}`,
       ].join("\n");
@@ -226,19 +148,7 @@ const Checkout = () => {
       setTimeout(() => {
         clear();
         setSubmitting(false);
-        navigate("/order-confirmation", {
-          state: {
-            items: items.map(i => ({ name: i.name, quantity: i.quantity, price: i.price })),
-            subtotal,
-            discount,
-            deliveryFee,
-            vat: vatAmount,
-            total: grandTotal,
-            deliveryMethod,
-            paymentMethod: "mobile_banking",
-            promoCode: appliedPromo,
-          }
-        });
+        navigate("/");
       }, 900);
 
       return;
@@ -246,85 +156,87 @@ const Checkout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-background text-foreground">
       <BrandHeader />
-      <main className="py-8 sm:py-12 flex-1">
+      <main className="section">
         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12">
           <section aria-labelledby="checkout-title">
-            <h1 id="checkout-title" className="font-serif text-2xl sm:text-3xl md:text-4xl">Checkout</h1>
-            <form id="checkout-form" onSubmit={onSubmit} className="mt-6 space-y-6">
+            <h1 id="checkout-title" className="heading-md">
+              Checkout
+            </h1>
+            <form onSubmit={onSubmit} className="mt-6 space-y-6 pb-24">
               <div className="grid md:grid-cols-2 gap-4">
-                <label className="flex flex-col gap-2 text-sm font-medium">
+                <label className="flex flex-col gap-2 text-sm">
                   Full name
-                  <input name="fullName" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="Jane Doe" />
+                  <input
+                    name="fullName"
+                    required
+                    className="border rounded-md px-4 py-3 bg-background"
+                    placeholder="Jane Doe"
+                  />
                 </label>
-                <label className="flex flex-col gap-2 text-sm font-medium">
+                <label className="flex flex-col gap-2 text-sm">
                   Email
-                  <input name="email" type="email" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="jane@example.com" />
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    className="border rounded-md px-4 py-3 bg-background"
+                    placeholder="jane@example.com"
+                  />
                 </label>
               </div>
-              <label className="flex flex-col gap-2 text-sm font-medium">
+              <label className="flex flex-col gap-2 text-sm">
                 Address
-                <input name="address" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="123 Serenity Lane" />
+                <input
+                  name="address"
+                  required
+                  className="border rounded-md px-4 py-3 bg-background"
+                  placeholder="123 Serenity Lane"
+                />
               </label>
-              <div className="grid sm:grid-cols-3 gap-4">
-                <label className="flex flex-col gap-2 text-sm font-medium">
+              <div className="grid md:grid-cols-3 gap-4">
+                <label className="flex flex-col gap-2 text-sm">
                   City
-                  <input name="city" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="San Francisco" />
+                  <input
+                    name="city"
+                    required
+                    className="border rounded-md px-4 py-3 bg-background"
+                    placeholder="San Francisco"
+                  />
                 </label>
-                <label className="flex flex-col gap-2 text-sm font-medium">
+                <label className="flex flex-col gap-2 text-sm">
                   State
-                  <input name="state" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="CA" />
+                  <input name="state" required className="border rounded-md px-4 py-3 bg-background" placeholder="CA" />
                 </label>
-                <label className="flex flex-col gap-2 text-sm font-medium">
+                <label className="flex flex-col gap-2 text-sm">
                   ZIP
-                  <input name="zip" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="94107" />
+                  <input
+                    name="zip"
+                    required
+                    className="border rounded-md px-4 py-3 bg-background"
+                    placeholder="94107"
+                  />
                 </label>
               </div>
 
-              {/* Delivery & Payment Options - Side by side */}
-              <div className="grid md:grid-cols-2 gap-4">
-                {/* Delivery Options */}
-                <div className="space-y-2">
-                  <span className="text-sm font-medium">Delivery Method</span>
-                  <div className="border rounded-md p-4 space-y-3">
-                    <label className="flex items-center gap-3 text-sm">
-                      <input
-                        type="radio"
-                        name="deliveryMethod"
-                        value="delivery"
-                        checked={deliveryMethod === "delivery"}
-                        onChange={() => setDeliveryMethod("delivery")}
-                      />
-                      <span>Delivery (+${DELIVERY_FEE.toFixed(2)})</span>
-                    </label>
-                    <label className="flex items-center gap-3 text-sm">
-                      <input
-                        type="radio"
-                        name="deliveryMethod"
-                        value="pickup"
-                        checked={deliveryMethod === "pickup"}
-                        onChange={() => setDeliveryMethod("pickup")}
-                      />
-                      <span>Pickup (Free)</span>
-                    </label>
-                  </div>
-                </div>
+              {/* Payment Options */}
+              <fieldset className="border rounded-md p-4">
+                <legend className="text-sm font-medium">Payment</legend>
 
-                {/* Payment Options */}
-                <div className="space-y-2">
-                  <span className="text-sm font-medium">Payment</span>
-                  <div className="border rounded-md p-4 space-y-3">
-                    <label className="flex items-center gap-3 text-sm">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="cod"
-                        checked={paymentMethod === "cod"}
-                        onChange={() => setPaymentMethod("cod")}
-                      />
-                      <span>Pay on Delivery</span>
-                    </label>
+                <div className="mt-3 space-y-3">
+                  <label className="flex items-center gap-3 text-sm">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="cod"
+                      checked={paymentMethod === "cod"}
+                      onChange={() => setPaymentMethod("cod")}
+                    />
+                    <span>Pay on Delivery (WhatsApp)</span>
+                  </label>
+
+                  <div className="space-y-2">
                     <label className="flex items-center gap-3 text-sm">
                       <input
                         type="radio"
@@ -335,49 +247,49 @@ const Checkout = () => {
                       />
                       <span>Mobile Banking</span>
                     </label>
+                    {paymentMethod === "mobile" && (
+                      <div className="ml-6 grid sm:grid-cols-3 gap-3">
+                        <label className="flex items-center gap-2 text-xs">
+                          <input
+                            type="radio"
+                            name="wallet"
+                            value="airtel"
+                            checked={mobileWallet === "airtel"}
+                            onChange={() => setMobileWallet("airtel")}
+                          />
+                          Airtel Money
+                        </label>
+                        <label className="flex items-center gap-2 text-xs">
+                          <input
+                            type="radio"
+                            name="wallet"
+                            value="tigo"
+                            checked={mobileWallet === "tigo"}
+                            onChange={() => setMobileWallet("tigo")}
+                          />
+                          Tigo Pesa
+                        </label>
+                        <label className="flex items-center gap-2 text-xs">
+                          <input
+                            type="radio"
+                            name="wallet"
+                            value="mpesa"
+                            checked={mobileWallet === "mpesa"}
+                            onChange={() => setMobileWallet("mpesa")}
+                          />
+                          MPesa
+                        </label>
+                      </div>
+                    )}
                   </div>
                 </div>
+              </fieldset>
+
+              <div className="sticky bottom-0 z-10 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-t pt-4">
+                <button disabled={submitting || items.length === 0} className="btn w-full">
+                  {submitting ? "Processing…" : `Place Order — $${total.toFixed(2)}`}
+                </button>
               </div>
-
-              {/* Mobile Wallet Selection - Shows when Mobile Banking selected */}
-              {paymentMethod === "mobile" && (
-                <div className="space-y-2">
-                  <span className="text-sm font-medium">Select Wallet</span>
-                  <div className="border rounded-md p-4 flex flex-wrap gap-4">
-                    <label className="flex items-center gap-2 text-sm">
-                      <input
-                        type="radio"
-                        name="wallet"
-                        value="airtel"
-                        checked={mobileWallet === "airtel"}
-                        onChange={() => setMobileWallet("airtel")}
-                      />
-                      Airtel Money
-                    </label>
-                    <label className="flex items-center gap-2 text-sm">
-                      <input
-                        type="radio"
-                        name="wallet"
-                        value="tigo"
-                        checked={mobileWallet === "tigo"}
-                        onChange={() => setMobileWallet("tigo")}
-                      />
-                      Tigo Pesa
-                    </label>
-                    <label className="flex items-center gap-2 text-sm">
-                      <input
-                        type="radio"
-                        name="wallet"
-                        value="mpesa"
-                        checked={mobileWallet === "mpesa"}
-                        onChange={() => setMobileWallet("mpesa")}
-                      />
-                      MPesa
-                    </label>
-                  </div>
-                </div>
-              )}
-
             </form>
           </section>
           <aside className="card-lux h-max">
@@ -390,85 +302,19 @@ const Checkout = () => {
                   <div key={i.id} className="flex items-center gap-4">
                     <img src={i.image} alt={i.alt} className="h-16 w-16 rounded-md border object-cover" />
                     <div className="flex-1">
-                      <p className="text-sm">{i.name} × {i.quantity}</p>
+                      <p className="text-sm">
+                        {i.name} × {i.quantity}
+                      </p>
                     </div>
                     <span className="text-sm font-medium">${(i.price * i.quantity).toFixed(2)}</span>
                   </div>
                 ))
               )}
             </div>
-            {/* Promo Code */}
-            <div className="mt-6 border-t pt-4">
-              <span className="text-sm font-medium">Promo Code</span>
-              {appliedPromo ? (
-                <div className="mt-2 flex items-center justify-between bg-accent/10 rounded-md px-3 py-2">
-                  <span className="text-sm">
-                    <span className="font-medium">{appliedPromo}</span>
-                    <span className="text-muted-foreground ml-2">({PROMO_CODES[appliedPromo].label})</span>
-                  </span>
-                  <button 
-                    type="button" 
-                    onClick={removePromo}
-                    className="text-sm text-destructive hover:underline"
-                  >
-                    Remove
-                  </button>
-                </div>
-              ) : (
-                <div className="mt-2 flex gap-2">
-                  <input
-                    type="text"
-                    value={promoCode}
-                    onChange={(e) => setPromoCode(e.target.value)}
-                    placeholder="Enter code"
-                    className="flex-1 border rounded-md px-3 py-2 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                  />
-                  <button 
-                    type="button" 
-                    onClick={applyPromoCode}
-                    className="btn-ghost border rounded-md px-4 py-2 text-sm hover:bg-muted/50"
-                  >
-                    Apply
-                  </button>
-                </div>
-              )}
+            <div className="mt-6 flex items-center justify-between border-t pt-4">
+              <span className="text-sm text-muted-foreground">Total</span>
+              <span className="font-medium">${total.toFixed(2)}</span>
             </div>
-
-            {/* Order Breakdown */}
-            <div className="mt-4 border-t pt-4 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Subtotal</span>
-                <span className="text-sm">${subtotal.toFixed(2)}</span>
-              </div>
-              {discount > 0 && (
-                <div className="flex items-center justify-between text-green-600">
-                  <span className="text-sm">Discount</span>
-                  <span className="text-sm">-${discount.toFixed(2)}</span>
-                </div>
-              )}
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">
-                  {deliveryMethod === "delivery" ? "Delivery" : "Pickup"}
-                </span>
-                <span className="text-sm">{deliveryFee > 0 ? `$${deliveryFee.toFixed(2)}` : "Free"}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">VAT (18%)</span>
-                <span className="text-sm">${vatAmount.toFixed(2)}</span>
-              </div>
-              <div className="flex items-center justify-between pt-2 border-t">
-                <span className="font-medium">Total</span>
-                <span className="font-medium">${grandTotal.toFixed(2)}</span>
-              </div>
-            </div>
-            <button 
-              type="submit" 
-              form="checkout-form"
-              disabled={submitting || items.length === 0} 
-              className="btn w-full mt-6"
-            >
-              {submitting ? 'Processing…' : `Place Order — $${grandTotal.toFixed(2)}`}
-            </button>
           </aside>
         </div>
       </main>
