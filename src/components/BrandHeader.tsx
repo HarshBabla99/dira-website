@@ -1,17 +1,11 @@
 import { Link } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
-import { useLanguage, languageOptions } from "@/context/LanguageContext";
-import { ShoppingBag, Globe } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useLanguage } from "@/context/LanguageContext";
+import { ShoppingBag } from "lucide-react";
 
 const BrandHeader = () => {
   const { openCart, items } = useCart();
-  const { language, setLanguage, t } = useLanguage();
+  const { language, toggleLanguage, t } = useLanguage();
   const count = items.reduce((s, i) => s + i.quantity, 0);
 
   return (
@@ -25,23 +19,15 @@ const BrandHeader = () => {
           <Link className="story-link" to="/shop">{t("shop")}</Link>
         </nav>
         <div className="flex items-center gap-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger className="btn-ghost flex items-center gap-1.5 text-sm">
-              <Globe className="h-4 w-4" />
-              <span>{language.toUpperCase()}</span>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-background border shadow-lg z-50">
-              {languageOptions.map((opt) => (
-                <DropdownMenuItem
-                  key={opt.value}
-                  onClick={() => setLanguage(opt.value)}
-                  className={language === opt.value ? "bg-muted" : ""}
-                >
-                  {opt.full}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <button
+            onClick={toggleLanguage}
+            className="btn-ghost flex items-center gap-1 text-sm font-medium px-3 py-1.5 rounded-full border"
+            aria-label="Toggle language"
+          >
+            <span className={language === "en" ? "text-foreground" : "text-muted-foreground"}>EN</span>
+            <span className="text-muted-foreground">/</span>
+            <span className={language === "sw" ? "text-foreground" : "text-muted-foreground"}>SW</span>
+          </button>
           <Link to="/shop" className="btn-ghost hidden sm:inline-flex">{t("shop")}</Link>
           <button aria-label="Open cart" onClick={openCart} className="btn relative">
             <ShoppingBag className="mr-2 h-4 w-4" /> {t("cart")}
