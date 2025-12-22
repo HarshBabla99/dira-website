@@ -148,21 +148,21 @@ const Checkout = () => {
       toast({ title: "WhatsApp opened", description: "Please confirm the order in WhatsApp." });
 
       setTimeout(() => {
+        const orderData = {
+          items,
+          subtotal,
+          promoDiscount,
+          promoCode: appliedPromo?.code,
+          deliveryFee,
+          deliveryMethod,
+          vat,
+          total,
+          paymentMethod: "Pay on Delivery",
+        };
+        localStorage.setItem("lastOrder", JSON.stringify(orderData));
         clear();
         setSubmitting(false);
-        navigate("/order-confirmation", {
-          state: {
-            items,
-            subtotal,
-            promoDiscount,
-            promoCode: appliedPromo?.code,
-            deliveryFee,
-            deliveryMethod,
-            vat,
-            total,
-            paymentMethod: "Pay on Delivery",
-          },
-        });
+        navigate("/order-confirmation", { state: orderData });
       }, 900);
       return;
     }
@@ -211,22 +211,22 @@ const Checkout = () => {
       window.open(url, "_blank");
 
       setTimeout(() => {
+        const orderData = {
+          items,
+          subtotal,
+          promoDiscount,
+          promoCode: appliedPromo?.code,
+          deliveryFee,
+          deliveryMethod,
+          vat,
+          total,
+          paymentMethod: `Mobile Banking (${mobileWallet?.toUpperCase()})`,
+          transactionId: txId,
+        };
+        localStorage.setItem("lastOrder", JSON.stringify(orderData));
         clear();
         setSubmitting(false);
-        navigate("/order-confirmation", {
-          state: {
-            items,
-            subtotal,
-            promoDiscount,
-            promoCode: appliedPromo?.code,
-            deliveryFee,
-            deliveryMethod,
-            vat,
-            total,
-            paymentMethod: `Mobile Banking (${mobileWallet?.toUpperCase()})`,
-            transactionId: txId,
-          },
-        });
+        navigate("/order-confirmation", { state: orderData });
       }, 900);
 
       return;
