@@ -16,6 +16,9 @@ interface OrderItem {
 
 interface OrderDetails {
   items: OrderItem[];
+  subtotal: number;
+  deliveryFee: number;
+  vat: number;
   total: number;
   paymentMethod: string;
   transactionId?: string;
@@ -69,7 +72,19 @@ const OrderConfirmation = () => {
             </div>
 
             <div className="border-t border-border pt-4 space-y-2 text-sm">
-              <div className="flex justify-between font-semibold text-base">
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span>${orderDetails.subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Delivery Fee</span>
+                <span>${orderDetails.deliveryFee.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>VAT (15%)</span>
+                <span>${orderDetails.vat.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between font-semibold text-base pt-2 border-t border-border">
                 <span>Total</span>
                 <span>${orderDetails.total.toFixed(2)}</span>
               </div>
