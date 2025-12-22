@@ -15,12 +15,19 @@ type MobileWallet = "airtel" | "tigo" | "mpesa";
 const buildWhatsAppLink = (phone: string, message: string) =>
   `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
+const DELIVERY_FEE = 5.0;
+const VAT_RATE = 0.15;
+
 const Checkout = () => {
-  const { items, total, clear } = useCart();
+  const { items, total: subtotal, clear } = useCart();
   const [submitting, setSubmitting] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
   const [mobileWallet, setMobileWallet] = useState<MobileWallet | null>(null);
   const navigate = useNavigate();
+
+  const deliveryFee = items.length > 0 ? DELIVERY_FEE : 0;
+  const vat = (subtotal + deliveryFee) * VAT_RATE;
+  const total = subtotal + deliveryFee + vat;
 
   // Basic SEO tags
   useEffect(() => {
@@ -99,6 +106,9 @@ const Checkout = () => {
         navigate("/order-confirmation", {
           state: {
             items,
+            subtotal,
+            deliveryFee,
+            vat,
             total,
             paymentMethod: "Pay on Delivery",
           },
@@ -157,6 +167,9 @@ const Checkout = () => {
         navigate("/order-confirmation", {
           state: {
             items,
+            subtotal,
+            deliveryFee,
+            vat,
             total,
             paymentMethod: `Mobile Banking (${mobileWallet?.toUpperCase()})`,
             transactionId: txId,
