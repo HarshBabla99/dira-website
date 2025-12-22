@@ -48,26 +48,26 @@ const CartSidebar = () => {
                   <p className="text-base font-medium leading-tight truncate">{item.name}</p>
                   <p className="text-base text-muted-foreground">${item.price.toFixed(2)}</p>
                 </div>
-                <div className="flex flex-col items-end gap-1">
+                <div className="flex flex-col items-end justify-center gap-2">
                   {/* Quantity picker */}
                   <div className="flex items-center border rounded-md">
                     <button 
                       onClick={() => decrement(item.id)} 
-                      className="p-1.5 hover:bg-muted/50 transition-colors"
+                      className="p-2 hover:bg-muted/50 transition-colors"
                       aria-label="Decrease quantity"
                     >
-                      <Minus className="h-3.5 w-3.5" />
+                      <Minus className="h-4 w-4" />
                     </button>
-                    <span className="w-6 text-center text-sm">{item.quantity}</span>
+                    <span className="w-8 text-center text-base">{item.quantity}</span>
                     <button 
                       onClick={() => increment(item.id)} 
-                      className="p-1.5 hover:bg-muted/50 transition-colors"
+                      className="p-2 hover:bg-muted/50 transition-colors"
                       aria-label="Increase quantity"
                     >
-                      <Plus className="h-3.5 w-3.5" />
+                      <Plus className="h-4 w-4" />
                     </button>
                   </div>
-                  <button onClick={() => remove(item.id)} className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t("remove")}</button>
+                  <button onClick={() => remove(item.id)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t("remove")}</button>
                 </div>
               </div>
             ))
