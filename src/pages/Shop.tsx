@@ -62,41 +62,40 @@ const Shop = () => {
                   <p className="mt-1 text-xs sm:text-sm text-muted-foreground line-clamp-2">{p.description}</p>
                 </div>
 
-                {/* Quantity Controls */}
-                <div className="mt-3 sm:mt-4 flex items-center justify-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => updateQuantity(p.id, (quantities[p.id] || 1) - 1)}
-                    className="btn-ghost p-2 rounded-lg"
-                    aria-label="Decrease quantity"
-                  >
-                    <Minus className="h-4 w-4" />
-                  </button>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    value={quantities[p.id] || 1}
-                    onChange={(e) => handleInputChange(p.id, e.target.value)}
-                    className="w-12 text-center border rounded-lg py-1.5 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring text-sm"
-                    aria-label="Quantity"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => updateQuantity(p.id, (quantities[p.id] || 1) + 1)}
-                    className="btn-ghost p-2 rounded-lg"
-                    aria-label="Increase quantity"
-                  >
-                    <Plus className="h-4 w-4" />
-                  </button>
-                </div>
-
-                <div className="mt-3">
+                {/* Quantity & Add Button */}
+                <div className="mt-3 sm:mt-4 flex items-center gap-2">
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={() => updateQuantity(p.id, (quantities[p.id] || 1) - 1)}
+                      className="btn-ghost p-1.5 rounded-md"
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus className="h-3.5 w-3.5" />
+                    </button>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={quantities[p.id] || 1}
+                      onChange={(e) => handleInputChange(p.id, e.target.value)}
+                      className="w-10 text-center border rounded-md py-1 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring text-sm"
+                      aria-label="Quantity"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => updateQuantity(p.id, (quantities[p.id] || 1) + 1)}
+                      className="btn-ghost p-1.5 rounded-md"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
                   <button 
-                    className="btn w-full text-sm sm:text-base py-2 sm:py-3" 
+                    className="btn flex-1 text-sm py-2" 
                     onClick={() => handleAddToCart(p)}
                   >
-                    {t("cart")} +
+                    Add
                   </button>
                 </div>
               </article>
