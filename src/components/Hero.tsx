@@ -7,26 +7,58 @@ const Hero = () => {
 
   return (
     <section aria-label="Hero" className="relative">
-      <div className="relative h-[60vh] sm:h-[70vh] md:h-[78vh] overflow-hidden rounded-none sm:rounded-2xl sm:mx-4 md:mx-6 sm:mt-4 border-y sm:border">
+      <div className="relative h-[85vh] sm:h-[90vh] md:h-screen overflow-hidden">
+        {/* Background Image with Ken Burns effect */}
         <img
           src={heroImage}
           alt="Luxurious artisanal handmade soap bars on natural stone"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover scale-105 animate-[scale-in_20s_ease-out_forwards]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
-        <div className="relative z-10 h-full flex items-end">
-          <div className="container mx-auto px-6 pb-10 sm:pb-12 md:pb-16 animate-fade-in">
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight max-w-3xl">
-              Luxury in Every Lather – Handmade with All‑Natural Ingredients
-            </h1>
-            <p className="text-base sm:text-lg text-muted-foreground mt-4 max-w-2xl">
-              Refined, minimal, and meticulously crafted soaps that elevate your daily ritual.
-            </p>
-            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-              <Link to="/shop" className="btn text-center">{t("shop")} Now</Link>
-              <a href="#about" className="btn-ghost text-center">{t("ourStory")}</a>
+        
+        {/* Gradient overlays for depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-transparent" />
+        
+        {/* Content */}
+        <div className="relative z-10 h-full flex flex-col justify-center">
+          <div className="container mx-auto px-6 md:px-12">
+            <div className="max-w-2xl space-y-6">
+              {/* Tagline */}
+              <p className="text-sm sm:text-base tracking-[0.2em] uppercase text-primary font-medium animate-fade-in">
+                Artisanal Skincare
+              </p>
+              
+              {/* Main heading */}
+              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] animate-fade-in" style={{ animationDelay: '0.1s' }}>
+                Luxury in Every Lather
+              </h1>
+              
+              {/* Subheading */}
+              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-lg animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                Refined, minimal, and meticulously crafted soaps that elevate your daily ritual.
+              </p>
+              
+              {/* CTA buttons */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                <Link to="/shop" className="btn text-center text-base px-8 py-4 hover-scale">
+                  {t("shop")} Now
+                </Link>
+                <a href="#about" className="btn-ghost text-center text-base px-8 py-4">
+                  {t("ourStory")}
+                </a>
+              </div>
             </div>
           </div>
+        </div>
+        
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <a href="#about" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+            <span className="text-xs tracking-widest uppercase">Scroll</span>
+            <div className="w-px h-8 bg-border relative overflow-hidden">
+              <div className="absolute inset-x-0 h-1/2 bg-primary animate-[slide-down_1.5s_ease-in-out_infinite]" />
+            </div>
+          </a>
         </div>
       </div>
     </section>
