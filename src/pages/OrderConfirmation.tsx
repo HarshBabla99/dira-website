@@ -6,21 +6,19 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 
 interface OrderItem {
+  id: string;
   name: string;
   quantity: number;
   price: number;
+  image?: string;
+  alt?: string;
 }
 
 interface OrderDetails {
   items: OrderItem[];
-  subtotal: number;
-  discount: number;
-  deliveryFee: number;
-  vat: number;
   total: number;
-  deliveryMethod: string;
   paymentMethod: string;
-  promoCode?: string;
+  transactionId?: string;
 }
 
 const OrderConfirmation = () => {
@@ -62,8 +60,8 @@ const OrderConfirmation = () => {
             <h2 className="font-serif text-xl border-b border-border pb-3">Order Summary</h2>
 
             <div className="space-y-3">
-              {orderDetails.items.map((item, index) => (
-                <div key={index} className="flex justify-between text-sm">
+              {orderDetails.items.map((item) => (
+                <div key={item.id} className="flex justify-between text-sm">
                   <span>{item.name} × {item.quantity}</span>
                   <span>${(item.price * item.quantity).toFixed(2)}</span>
                 </div>
@@ -71,33 +69,17 @@ const OrderConfirmation = () => {
             </div>
 
             <div className="border-t border-border pt-4 space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span>Subtotal</span>
-                <span>${orderDetails.subtotal.toFixed(2)}</span>
-              </div>
-              {orderDetails.discount > 0 && (
-                <div className="flex justify-between text-primary">
-                  <span>Discount{orderDetails.promoCode && ` (${orderDetails.promoCode})`}</span>
-                  <span>-${orderDetails.discount.toFixed(2)}</span>
-                </div>
-              )}
-              <div className="flex justify-between">
-                <span>Delivery ({orderDetails.deliveryMethod})</span>
-                <span>{orderDetails.deliveryFee === 0 ? "Free" : `$${orderDetails.deliveryFee.toFixed(2)}`}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>VAT (15%)</span>
-                <span>${orderDetails.vat.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between font-semibold text-base pt-2 border-t border-border">
+              <div className="flex justify-between font-semibold text-base">
                 <span>Total</span>
                 <span>${orderDetails.total.toFixed(2)}</span>
               </div>
             </div>
 
             <div className="border-t border-border pt-4 text-sm text-muted-foreground">
-              <p><strong>Payment:</strong> {orderDetails.paymentMethod === "pay_on_delivery" ? "Pay on Delivery" : "Mobile Banking"}</p>
-              <p><strong>Delivery:</strong> {orderDetails.deliveryMethod === "standard" ? "Standard (3-5 days)" : "Express (1-2 days)"}</p>
+              <p><strong>Payment:</strong> {orderDetails.paymentMethod}</p>
+              {orderDetails.transactionId && (
+                <p><strong>Transaction ID:</strong> {orderDetails.transactionId}</p>
+              )}
             </div>
           </div>
 
