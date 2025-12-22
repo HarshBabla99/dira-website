@@ -96,7 +96,13 @@ const Checkout = () => {
       setTimeout(() => {
         clear();
         setSubmitting(false);
-        navigate("/");
+        navigate("/order-confirmation", {
+          state: {
+            items,
+            total,
+            paymentMethod: "Pay on Delivery",
+          },
+        });
       }, 900);
       return;
     }
@@ -148,7 +154,14 @@ const Checkout = () => {
       setTimeout(() => {
         clear();
         setSubmitting(false);
-        navigate("/");
+        navigate("/order-confirmation", {
+          state: {
+            items,
+            total,
+            paymentMethod: `Mobile Banking (${mobileWallet?.toUpperCase()})`,
+            transactionId: txId,
+          },
+        });
       }, 900);
 
       return;
