@@ -27,7 +27,10 @@
     --muted-foreground: 26 10% 38%;
 
     --accent: 18 55% 46%; /* spice terracotta */
-    --accent-foreground: 26 24% 16%;
+    --accent-foreground: 45 25% 96%;
+
+    --success: 152 45% 38%; /* nature green */
+    --success-foreground: 45 25% 96%;
 
     --destructive: 2 84% 58%;
     --destructive-foreground: 45 25% 96%;
@@ -72,7 +75,10 @@
     --muted-foreground: 42 10% 72%;
 
     --accent: 18 60% 50%; /* spice terracotta */
-    --accent-foreground: 26 25% 15%;
+    --accent-foreground: 45 25% 96%;
+
+    --success: 152 40% 45%; /* nature green */
+    --success-foreground: 26 25% 15%;
 
     --destructive: 2 62% 44%;
     --destructive-foreground: 42 25% 92%;
