@@ -13,7 +13,7 @@ const SectionAbout = () => {
             <h2 id="about-title" className="font-serif text-2xl sm:text-3xl md:text-4xl leading-snug mb-4">
               {t("ourStory")}
             </h2>
-            <h3 className="font-serif text-lg sm:text-xl text-muted-foreground mb-4">Meet the Creators</h3>
+            <h3 className="font-serif text-xl sm:text-2xl mb-4">Meet the Creators</h3>
             <p className="text-base text-muted-foreground leading-relaxed mb-3">
               Dira Naturals was born from a mother-daughter passion for natural skincare. 
               Sarah and Amelia started experimenting with cold-process soap making in their 
