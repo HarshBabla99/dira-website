@@ -38,15 +38,15 @@ const SectionAbout = () => {
         </div>
 
         {/* Values Section */}
-        <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-center">
-          <div className="md:col-span-7">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-start">
+          <div>
             <h3 className="font-serif text-xl sm:text-2xl mb-4">Artisanal. Sustainable. Pure.</h3>
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+            <p className="text-base text-muted-foreground leading-relaxed">
               We craft small-batch soaps using cold-process methods, botanical oils,
               and mineral-rich clays. Our formulas are free from synthetic dyes and harsh sulfates,
               designed to nourish skin and calm the senses.
             </p>
-            <ul className="mt-6 space-y-2 text-sm sm:text-base text-muted-foreground">
+            <ul className="mt-5 space-y-2 text-sm sm:text-base text-muted-foreground">
               <li className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                 Ethically sourced, plant-based ingredients
@@ -61,8 +61,8 @@ const SectionAbout = () => {
               </li>
             </ul>
           </div>
-          <div className="md:col-span-5">
-            <div className="card-lux">
+          <div>
+            <div className="card-lux h-full flex flex-col justify-center">
               <blockquote className="text-sm sm:text-base text-muted-foreground italic leading-relaxed">
                 "We believe in quiet luxury—considered materials, elevated textures, and thoughtful details.
                 Each bar is cured for weeks to achieve a gentle, creamy lather."
