@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, Store, Languages } from "lucide-react";
 
 const BrandHeader = () => {
   const { openCart, items } = useCart();
@@ -21,14 +21,17 @@ const BrandHeader = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={toggleLanguage}
-            className="btn-ghost flex items-center gap-1 text-sm font-medium px-3 py-1.5 rounded-full border"
+            className="btn-ghost flex items-center gap-1.5"
             aria-label="Toggle language"
           >
+            <Languages className="h-4 w-4" />
             <span className={language === "en" ? "text-foreground" : "text-muted-foreground"}>EN</span>
             <span className="text-muted-foreground">/</span>
             <span className={language === "sw" ? "text-foreground" : "text-muted-foreground"}>SW</span>
           </button>
-          <Link to="/shop" className="btn-ghost hidden sm:inline-flex">{t("shop")}</Link>
+          <Link to="/shop" className="btn-ghost hidden sm:inline-flex items-center gap-2">
+            <Store className="h-4 w-4" /> {t("shop")}
+          </Link>
           <button aria-label="Open cart" onClick={openCart} className="btn relative">
             <ShoppingBag className="mr-2 h-4 w-4" /> {t("cart")}
             {count > 0 && (
