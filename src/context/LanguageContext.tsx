@@ -10,7 +10,7 @@ interface LanguageContextType {
 
 const translations: Record<Language, Record<string, string>> = {
   en: {
-    about: "About",
+    ourStory: "Our Story",
     featured: "Featured",
     testimonials: "Testimonials",
     shop: "Shop",
@@ -24,7 +24,7 @@ const translations: Record<Language, Record<string, string>> = {
     remove: "Remove",
   },
   sw: {
-    about: "Kuhusu",
+    ourStory: "Hadithi Yetu",
     featured: "Bidhaa Bora",
     testimonials: "Ushuhuda",
     shop: "Duka",
