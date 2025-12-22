@@ -159,7 +159,19 @@ const Checkout = () => {
       setTimeout(() => {
         clear();
         setSubmitting(false);
-        navigate("/");
+        navigate("/order-confirmation", {
+          state: {
+            items: items.map(i => ({ name: i.name, quantity: i.quantity, price: i.price })),
+            subtotal,
+            discount,
+            deliveryFee,
+            vat: vatAmount,
+            total: grandTotal,
+            deliveryMethod,
+            paymentMethod: "pay_on_delivery",
+            promoCode: appliedPromo,
+          }
+        });
       }, 900);
       return;
     }
@@ -214,7 +226,19 @@ const Checkout = () => {
       setTimeout(() => {
         clear();
         setSubmitting(false);
-        navigate("/");
+        navigate("/order-confirmation", {
+          state: {
+            items: items.map(i => ({ name: i.name, quantity: i.quantity, price: i.price })),
+            subtotal,
+            discount,
+            deliveryFee,
+            vat: vatAmount,
+            total: grandTotal,
+            deliveryMethod,
+            paymentMethod: "mobile_banking",
+            promoCode: appliedPromo,
+          }
+        });
       }, 900);
 
       return;
