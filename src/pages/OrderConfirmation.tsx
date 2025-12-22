@@ -115,7 +115,8 @@ const OrderConfirmation = () => {
               </div>
             </div>
 
-            <div className="border-t border-border pt-4 text-sm text-muted-foreground">
+            <div className="border-t border-border pt-4 text-sm text-muted-foreground space-y-1">
+              <p><strong>Delivery:</strong> {deliveryMethod === "delivery" ? "Home Delivery" : "Store Pickup"}</p>
               <p><strong>Payment:</strong> {orderDetails.paymentMethod}</p>
               {orderDetails.transactionId && (
                 <p><strong>Transaction ID:</strong> {orderDetails.transactionId}</p>
