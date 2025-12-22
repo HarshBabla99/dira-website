@@ -58,11 +58,14 @@ const OrderConfirmation = () => {
 
   // Provide defaults for optional breakdown fields
   const subtotal = orderDetails.subtotal ?? orderDetails.total;
-  const promoDiscount = orderDetails.promoDiscount ?? 0;
   const promoCode = orderDetails.promoCode;
+  // If promoDiscount wasn't passed (or was lost), infer it from the totals.
+  const promoDiscountRaw = orderDetails.promoDiscount;
   const deliveryFee = orderDetails.deliveryFee ?? 0;
   const deliveryMethod = orderDetails.deliveryMethod ?? "delivery";
   const vat = orderDetails.vat ?? 0;
+  const inferredPromoDiscount = Math.max(0, subtotal + deliveryFee + vat - orderDetails.total);
+  const promoDiscount = promoDiscountRaw && promoDiscountRaw > 0 ? promoDiscountRaw : promoCode ? inferredPromoDiscount : 0;
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
@@ -93,7 +96,7 @@ const OrderConfirmation = () => {
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               {promoDiscount > 0 && (
-                <div className="flex justify-between text-green-600">
+                <div className="flex justify-between text-accent">
                   <span>Discount {promoCode && `(${promoCode})`}</span>
                   <span>-${promoDiscount.toFixed(2)}</span>
                 </div>
