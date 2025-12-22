@@ -91,7 +91,7 @@ const OrderConfirmation = () => {
                 <span>${deliveryFee.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span>VAT (15%)</span>
+                <span>VAT (18%)</span>
                 <span>${vat.toFixed(2)}</span>
               </div>
               <div className="flex justify-between font-semibold text-base pt-2 border-t border-border">

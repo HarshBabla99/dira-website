@@ -16,7 +16,7 @@ const buildWhatsAppLink = (phone: string, message: string) =>
   `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
 const DELIVERY_FEE = 5.0;
-const VAT_RATE = 0.15;
+const VAT_RATE = 0.18;
 
 const Checkout = () => {
   const { items, total: subtotal, clear } = useCart();
