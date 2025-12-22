@@ -49,26 +49,29 @@ const CartSidebar = () => {
                   <p className="text-base text-muted-foreground">${item.price.toFixed(2)}</p>
                 </div>
                 {/* Quantity picker with trash */}
-                <div className="flex items-center border rounded-md">
-                  <button 
-                    onClick={() => remove(item.id)} 
-                    className="p-2 hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
+                <div className="flex items-center border rounded-md h-8">
+                  <button
+                    onClick={() => remove(item.id)}
+                    className="h-8 w-8 grid place-items-center hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
                     aria-label="Remove item"
+                    type="button"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
-                  <button 
-                    onClick={() => decrement(item.id)} 
-                    className="p-2 hover:bg-muted/50 transition-colors border-l"
+                  <button
+                    onClick={() => decrement(item.id)}
+                    className="h-8 w-8 grid place-items-center hover:bg-muted/50 transition-colors border-l"
                     aria-label="Decrease quantity"
+                    type="button"
                   >
                     <Minus className="h-4 w-4" />
                   </button>
-                  <span className="w-8 text-center text-sm">{item.quantity}</span>
-                  <button 
-                    onClick={() => increment(item.id)} 
-                    className="p-2 hover:bg-muted/50 transition-colors"
+                  <span className="w-8 text-center text-sm leading-none">{item.quantity}</span>
+                  <button
+                    onClick={() => increment(item.id)}
+                    className="h-8 w-8 grid place-items-center hover:bg-muted/50 transition-colors"
                     aria-label="Increase quantity"
+                    type="button"
                   >
                     <Plus className="h-4 w-4" />
                   </button>
