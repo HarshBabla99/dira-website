@@ -121,7 +121,7 @@ const Shop = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <BrandHeader />
-      <main className="section">
+      <main className="py-8 md:py-12">
         <div className="container mx-auto px-6">
           {/* Signature Collection */}
           <section className="mb-12 sm:mb-16">
