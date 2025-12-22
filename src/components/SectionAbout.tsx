@@ -7,22 +7,20 @@ const SectionAbout = () => {
   return (
     <section id="about" aria-labelledby="about-title" className="section scroll-mt-16 md:scroll-mt-20">
       <div className="container mx-auto px-6">
-        {/* Section Header */}
-        <h2 id="about-title" className="font-serif text-2xl sm:text-3xl md:text-4xl leading-snug text-center mb-10 md:mb-14">
-          {t("ourStory")}
-        </h2>
-
         {/* Founders Section */}
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-12 md:mb-16">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-start mb-12 md:mb-16">
           <div className="order-2 md:order-1">
-            <h3 className="font-serif text-xl sm:text-2xl mb-4">Meet the Creators</h3>
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
+            <h2 id="about-title" className="font-serif text-2xl sm:text-3xl md:text-4xl leading-snug mb-4">
+              {t("ourStory")}
+            </h2>
+            <h3 className="font-serif text-lg sm:text-xl text-muted-foreground mb-4">Meet the Creators</h3>
+            <p className="text-base text-muted-foreground leading-relaxed mb-3">
               Dira Naturals was born from a mother-daughter passion for natural skincare. 
               Sarah and Amelia started experimenting with cold-process soap making in their 
               home kitchen in 2018, driven by a desire to create gentle, effective products 
               free from harsh chemicals.
             </p>
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+            <p className="text-base text-muted-foreground leading-relaxed">
               Today, every bar is still handcrafted in small batches at our workshop in 
               Dar es Salaam, using locally sourced botanicals and time-honored techniques 
               passed down through generations.
