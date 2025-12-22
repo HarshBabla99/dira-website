@@ -222,9 +222,9 @@ const Checkout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <BrandHeader />
-      <main className="py-8 sm:py-12">
+      <main className="py-8 sm:py-12 flex-1">
         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12">
           <section aria-labelledby="checkout-title">
             <h1 id="checkout-title" className="font-serif text-2xl sm:text-3xl md:text-4xl">Checkout</h1>
