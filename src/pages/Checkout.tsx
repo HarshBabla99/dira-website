@@ -16,6 +16,13 @@ type DeliveryMethod = "delivery" | "pickup";
 const DELIVERY_FEE = 5.00;
 const VAT_RATE = 0.18;
 
+// Promo codes - in production, validate these via backend
+const PROMO_CODES: Record<string, { discount: number; type: "percent" | "fixed"; label: string }> = {
+  "WELCOME10": { discount: 10, type: "percent", label: "10% off" },
+  "SAVE5": { discount: 5, type: "fixed", label: "$5 off" },
+  "LUXURY20": { discount: 20, type: "percent", label: "20% off" },
+};
+
 const buildWhatsAppLink = (phone: string, message: string) =>
   `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
@@ -25,14 +32,43 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
   const [mobileWallet, setMobileWallet] = useState<MobileWallet | null>(null);
   const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod>("delivery");
+  const [promoCode, setPromoCode] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
   const navigate = useNavigate();
   const { clear } = useCart();
 
+  // Calculate discount
+  const getDiscount = () => {
+    if (!appliedPromo || !PROMO_CODES[appliedPromo]) return 0;
+    const promo = PROMO_CODES[appliedPromo];
+    if (promo.type === "percent") {
+      return total * (promo.discount / 100);
+    }
+    return Math.min(promo.discount, total); // Don't discount more than subtotal
+  };
+
+  const applyPromoCode = () => {
+    const code = promoCode.trim().toUpperCase();
+    if (PROMO_CODES[code]) {
+      setAppliedPromo(code);
+      toast({ title: "Promo applied!", description: PROMO_CODES[code].label });
+    } else {
+      toast({ title: "Invalid code", description: "This promo code is not valid.", variant: "destructive" });
+    }
+  };
+
+  const removePromo = () => {
+    setAppliedPromo(null);
+    setPromoCode("");
+  };
+
   // Calculate totals
+  const discount = getDiscount();
   const deliveryFee = deliveryMethod === "delivery" ? DELIVERY_FEE : 0;
   const subtotal = total;
-  const vatAmount = (subtotal + deliveryFee) * VAT_RATE;
-  const grandTotal = subtotal + deliveryFee + vatAmount;
+  const discountedSubtotal = subtotal - discount;
+  const vatAmount = (discountedSubtotal + deliveryFee) * VAT_RATE;
+  const grandTotal = discountedSubtotal + deliveryFee + vatAmount;
 
   // Basic SEO tags
   useEffect(() => {
@@ -337,11 +373,55 @@ const Checkout = () => {
                 ))
               )}
             </div>
-            <div className="mt-6 border-t pt-4 space-y-2">
+            {/* Promo Code */}
+            <div className="mt-6 border-t pt-4">
+              <span className="text-sm font-medium">Promo Code</span>
+              {appliedPromo ? (
+                <div className="mt-2 flex items-center justify-between bg-accent/10 rounded-md px-3 py-2">
+                  <span className="text-sm">
+                    <span className="font-medium">{appliedPromo}</span>
+                    <span className="text-muted-foreground ml-2">({PROMO_CODES[appliedPromo].label})</span>
+                  </span>
+                  <button 
+                    type="button" 
+                    onClick={removePromo}
+                    className="text-sm text-destructive hover:underline"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ) : (
+                <div className="mt-2 flex gap-2">
+                  <input
+                    type="text"
+                    value={promoCode}
+                    onChange={(e) => setPromoCode(e.target.value)}
+                    placeholder="Enter code"
+                    className="flex-1 border rounded-md px-3 py-2 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                  />
+                  <button 
+                    type="button" 
+                    onClick={applyPromoCode}
+                    className="btn-ghost border rounded-md px-4 py-2 text-sm hover:bg-muted/50"
+                  >
+                    Apply
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Order Breakdown */}
+            <div className="mt-4 border-t pt-4 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">Subtotal</span>
                 <span className="text-sm">${subtotal.toFixed(2)}</span>
               </div>
+              {discount > 0 && (
+                <div className="flex items-center justify-between text-green-600">
+                  <span className="text-sm">Discount</span>
+                  <span className="text-sm">-${discount.toFixed(2)}</span>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">
                   {deliveryMethod === "delivery" ? "Delivery" : "Pickup"}
