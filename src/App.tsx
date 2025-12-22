@@ -7,8 +7,8 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Shop from "./pages/Shop";
 import Checkout from "./pages/Checkout";
-import { CartProvider } from "./context/CartContext";
-import { LanguageProvider } from "./context/LanguageContext";
+import { CartProvider } from "@/context/CartContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 import CartSidebar from "./components/CartSidebar";
 
 const queryClient = new QueryClient();
