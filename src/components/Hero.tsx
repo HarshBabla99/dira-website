@@ -12,7 +12,7 @@ const Hero = () => {
         <img
           src={heroImage}
           alt="Luxurious artisanal handmade soap bars on natural stone"
-          className="absolute inset-0 h-full w-full object-cover scale-105 animate-[scale-in_20s_ease-out_forwards]"
+          className="absolute inset-0 h-full w-full object-cover"
         />
         
         {/* Subtle gradient overlay for text readability */}
