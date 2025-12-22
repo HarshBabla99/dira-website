@@ -43,23 +43,20 @@ const CartSidebar = () => {
           ) : (
             items.map((item) => (
               <div key={item.id} className="flex gap-3 border-b border-border/50 pb-3">
-                <img src={item.image} alt={item.alt} className="w-14 self-stretch rounded-md border object-cover" />
-                <div className="flex-1 flex flex-col justify-between py-0.5">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <p className="text-sm font-medium leading-tight">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">${item.price.toFixed(2)}</p>
-                    </div>
-                    <button onClick={() => remove(item.id)} className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t("remove")}</button>
-                  </div>
+                <img src={item.image} alt={item.alt} className="h-14 w-14 rounded-md border object-cover flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-base font-medium leading-tight truncate">{item.name}</p>
+                  <p className="text-base text-muted-foreground">${item.price.toFixed(2)}</p>
+                </div>
+                <div className="flex flex-col items-end gap-1">
                   {/* Quantity picker */}
-                  <div className="flex items-center border rounded-md w-fit">
+                  <div className="flex items-center border rounded-md">
                     <button 
                       onClick={() => decrement(item.id)} 
                       className="p-1.5 hover:bg-muted/50 transition-colors"
                       aria-label="Decrease quantity"
                     >
-                      <Minus className="h-3 w-3" />
+                      <Minus className="h-3.5 w-3.5" />
                     </button>
                     <span className="w-6 text-center text-sm">{item.quantity}</span>
                     <button 
@@ -67,9 +64,10 @@ const CartSidebar = () => {
                       className="p-1.5 hover:bg-muted/50 transition-colors"
                       aria-label="Increase quantity"
                     >
-                      <Plus className="h-3 w-3" />
+                      <Plus className="h-3.5 w-3.5" />
                     </button>
                   </div>
+                  <button onClick={() => remove(item.id)} className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t("remove")}</button>
                 </div>
               </div>
             ))
