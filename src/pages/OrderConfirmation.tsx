@@ -44,9 +44,19 @@ const OrderConfirmation = () => {
     }
   }, [orderDetails, navigate]);
 
-  if (!orderDetails) {
+  // Validate required fields exist
+  const isValidOrder = orderDetails && 
+    orderDetails.items && 
+    typeof orderDetails.total === 'number';
+
+  if (!isValidOrder) {
     return null;
   }
+
+  // Provide defaults for optional breakdown fields
+  const subtotal = orderDetails.subtotal ?? orderDetails.total;
+  const deliveryFee = orderDetails.deliveryFee ?? 0;
+  const vat = orderDetails.vat ?? 0;
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
@@ -74,15 +84,15 @@ const OrderConfirmation = () => {
             <div className="border-t border-border pt-4 space-y-2 text-sm">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>${orderDetails.subtotal.toFixed(2)}</span>
+                <span>${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
                 <span>Delivery Fee</span>
-                <span>${orderDetails.deliveryFee.toFixed(2)}</span>
+                <span>${deliveryFee.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
                 <span>VAT (15%)</span>
-                <span>${orderDetails.vat.toFixed(2)}</span>
+                <span>${vat.toFixed(2)}</span>
               </div>
               <div className="flex justify-between font-semibold text-base pt-2 border-t border-border">
                 <span>Total</span>
