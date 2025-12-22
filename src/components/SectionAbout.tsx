@@ -55,12 +55,12 @@ const SectionAbout = () => {
           </div>
 
           {/* Right Column - Image & Quote */}
-          <div className="order-1 md:order-2 space-y-6">
-            <div className="rounded-xl overflow-hidden border shadow-md">
+          <div className="order-1 md:order-2 flex flex-col gap-6">
+            <div className="rounded-xl overflow-hidden border shadow-md flex-1">
               <img 
                 src={foundersImage} 
                 alt="Sarah and Amelia, founders of Dira Naturals, crafting artisanal soaps in their workshop" 
-                className="w-full h-auto object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="card-lux">
