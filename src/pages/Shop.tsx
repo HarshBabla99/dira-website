@@ -52,16 +52,16 @@ const Shop = () => {
         <p className="mt-1 text-xs sm:text-sm text-muted-foreground line-clamp-2">{p.description}</p>
       </div>
 
-      {/* Quantity & Add Button - Stacked with equal widths */}
-      <div className="mt-3 sm:mt-4 flex flex-col gap-2">
-        <div className="flex items-center justify-between">
+      {/* Quantity & Add Button - Same row, equal widths */}
+      <div className="mt-3 sm:mt-4 flex items-stretch gap-2">
+        <div className="flex-1 flex items-center justify-between border rounded-md">
           <button
             type="button"
             onClick={() => updateQuantity(p.id, (quantities[p.id] || 1) - 1)}
-            className="btn-ghost p-2 rounded-md flex-1"
+            className="p-2 hover:bg-muted/50 transition-colors"
             aria-label="Decrease quantity"
           >
-            <Minus className="h-4 w-4 mx-auto" />
+            <Minus className="h-4 w-4" />
           </button>
           <input
             type="text"
@@ -69,20 +69,20 @@ const Shop = () => {
             pattern="[0-9]*"
             value={quantities[p.id] || 1}
             onChange={(e) => handleInputChange(p.id, e.target.value)}
-            className="w-12 text-center border rounded-md py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring text-sm mx-1"
+            className="w-8 text-center bg-transparent text-foreground focus:outline-none text-sm"
             aria-label="Quantity"
           />
           <button
             type="button"
             onClick={() => updateQuantity(p.id, (quantities[p.id] || 1) + 1)}
-            className="btn-ghost p-2 rounded-md flex-1"
+            className="p-2 hover:bg-muted/50 transition-colors"
             aria-label="Increase quantity"
           >
-            <Plus className="h-4 w-4 mx-auto" />
+            <Plus className="h-4 w-4" />
           </button>
         </div>
         <button 
-          className="btn w-full text-sm py-2" 
+          className="btn flex-1 text-sm py-2" 
           onClick={() => handleAddToCart(p)}
         >
           Add
@@ -99,8 +99,8 @@ const Shop = () => {
           {/* Signature Collection */}
           <section className="mb-12 sm:mb-16">
             <header className="mb-6 text-center md:text-left">
-              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl">Signature Collection</h1>
-              <p className="mt-2 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto md:mx-0">
+              <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl">Signature Collection</h1>
+              <p className="mt-2 text-base text-muted-foreground max-w-2xl mx-auto md:mx-0">
                 Our timeless essentials — crafted for everyday luxury.
               </p>
             </header>
@@ -115,7 +115,7 @@ const Shop = () => {
           <section>
             <header className="mb-6 text-center md:text-left">
               <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl">Seasonal Collection</h2>
-              <p className="mt-2 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto md:mx-0">
+              <p className="mt-2 text-base text-muted-foreground max-w-2xl mx-auto md:mx-0">
                 Limited edition bars inspired by the changing seasons.
               </p>
             </header>
