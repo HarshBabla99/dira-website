@@ -1,10 +1,10 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
-export type Language = "en" | "sw" | "fr";
+export type Language = "en" | "sw";
 
 interface LanguageContextType {
   language: Language;
-  setLanguage: (lang: Language) => void;
+  toggleLanguage: () => void;
   t: (key: string) => string;
 }
 
@@ -37,39 +37,23 @@ const translations: Record<Language, Record<string, string>> = {
     close: "Funga",
     remove: "Ondoa",
   },
-  fr: {
-    about: "À propos",
-    featured: "En vedette",
-    testimonials: "Témoignages",
-    shop: "Boutique",
-    cart: "Panier",
-    clear: "Vider",
-    checkout: "Passer à la caisse",
-    subtotal: "Sous-total",
-    emptyCart: "Votre panier est vide.",
-    yourCart: "Votre Panier",
-    close: "Fermer",
-    remove: "Supprimer",
-  },
 };
-
-export const languageOptions: { value: Language; label: string; full: string }[] = [
-  { value: "en", label: "EN", full: "English" },
-  { value: "sw", label: "SW", full: "Kiswahili" },
-  { value: "fr", label: "FR", full: "Français" },
-];
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState<Language>("en");
 
+  const toggleLanguage = () => {
+    setLanguage((prev) => (prev === "en" ? "sw" : "en"));
+  };
+
   const t = (key: string): string => {
     return translations[language][key] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, toggleLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
