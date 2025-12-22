@@ -7,42 +7,30 @@ const Footer = () => {
 
   return (
     <footer className="border-t bg-secondary/30">
-      <div className="container mx-auto px-6 py-12 grid gap-10 md:grid-cols-3">
+      <div className="container mx-auto px-6 py-8 grid gap-6 md:grid-cols-3 text-center">
         {/* Brand */}
-        <div>
+        <div className="flex flex-col items-center">
           <Link to="/" className="flex items-center gap-2 font-serif text-xl tracking-wide">
             <Leaf className="h-5 w-5 text-primary" />
             Dira Naturals
           </Link>
-          <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+          <p className="mt-2 text-sm text-muted-foreground">
             Luxury handmade soaps crafted with all‑natural ingredients.
           </p>
         </div>
 
         {/* Navigation */}
-        <nav className="flex flex-col gap-3 text-sm">
-          <span className="font-serif text-base font-medium mb-1">{t("featured")}</span>
-          <a href="#about" className="story-link text-muted-foreground hover:text-foreground transition-colors">
-            {t("about")}
-          </a>
-          <a href="#featured" className="story-link text-muted-foreground hover:text-foreground transition-colors">
-            {t("featured")}
-          </a>
-          <a href="#testimonials" className="story-link text-muted-foreground hover:text-foreground transition-colors">
-            {t("testimonials")}
-          </a>
-          <Link to="/shop" className="story-link text-muted-foreground hover:text-foreground transition-colors">
-            {t("shop")}
-          </Link>
+        <nav className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
+          <a href="#about" className="hover:text-foreground transition-colors">{t("about")}</a>
+          <a href="#featured" className="hover:text-foreground transition-colors">{t("featured")}</a>
+          <a href="#testimonials" className="hover:text-foreground transition-colors">{t("testimonials")}</a>
+          <Link to="/shop" className="hover:text-foreground transition-colors">{t("shop")}</Link>
         </nav>
 
         {/* Contact */}
-        <div className="text-sm text-muted-foreground space-y-3">
-          <span className="font-serif text-base font-medium text-foreground block mb-1">Contact</span>
+        <div className="flex flex-col items-center text-sm text-muted-foreground">
           <p>hello@diranaturals.com</p>
-          <p className="pt-4 border-t border-border/50">
-            © {new Date().getFullYear()} Dira Naturals. All rights reserved.
-          </p>
+          <p className="mt-1">© {new Date().getFullYear()} Dira Naturals</p>
         </div>
       </div>
     </footer>
