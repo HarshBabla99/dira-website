@@ -52,22 +52,22 @@ const CartSidebar = () => {
                 <div className="flex items-center border rounded-md">
                   <button 
                     onClick={() => remove(item.id)} 
-                    className="p-2 hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
+                    className="px-2 py-1.5 hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
                     aria-label="Remove item"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
                   <button 
                     onClick={() => decrement(item.id)} 
-                    className="p-2 hover:bg-muted/50 transition-colors border-l"
+                    className="px-2 py-1.5 hover:bg-muted/50 transition-colors border-l"
                     aria-label="Decrease quantity"
                   >
                     <Minus className="h-4 w-4" />
                   </button>
-                  <span className="w-8 text-center text-base">{item.quantity}</span>
+                  <span className="w-8 text-center text-sm">{item.quantity}</span>
                   <button 
                     onClick={() => increment(item.id)} 
-                    className="p-2 hover:bg-muted/50 transition-colors"
+                    className="px-2 py-1.5 hover:bg-muted/50 transition-colors"
                     aria-label="Increase quantity"
                   >
                     <Plus className="h-4 w-4" />
