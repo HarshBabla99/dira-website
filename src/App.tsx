@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Shop from "./pages/Shop";
 import Checkout from "./pages/Checkout";
 import { CartProvider } from "./context/CartContext";
+import { LanguageProvider } from "./context/LanguageContext";
 import CartSidebar from "./components/CartSidebar";
 
 const queryClient = new QueryClient();
@@ -17,18 +18,20 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <CartProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/checkout" element={<Checkout />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <CartSidebar />
-        </BrowserRouter>
-      </CartProvider>
+      <LanguageProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/checkout" element={<Checkout />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <CartSidebar />
+          </BrowserRouter>
+        </CartProvider>
+      </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

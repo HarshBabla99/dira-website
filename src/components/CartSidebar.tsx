@@ -1,8 +1,10 @@
 import { useCart } from "@/context/CartContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { Link } from "react-router-dom";
 
 const CartSidebar = () => {
   const { isOpen, items, total, increment, decrement, remove, closeCart, clear } = useCart();
+  const { t } = useLanguage();
 
   return (
     <div aria-hidden={!isOpen} className={`fixed inset-0 z-50 ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
@@ -18,12 +20,12 @@ const CartSidebar = () => {
         aria-label="Shopping cart"
       >
         <div className="flex items-center justify-between p-6 border-b">
-          <h3 className="font-serif text-lg">Your Cart</h3>
-          <button type="button" onClick={closeCart} className="btn-ghost">Close</button>
+          <h3 className="font-serif text-lg">{t("yourCart")}</h3>
+          <button type="button" onClick={closeCart} className="btn-ghost">{t("close")}</button>
         </div>
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {items.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Your cart is empty.</p>
+            <p className="text-sm text-muted-foreground">{t("emptyCart")}</p>
           ) : (
             items.map((item) => (
               <div key={item.id} className="flex gap-4 border-b pb-4">
@@ -34,7 +36,7 @@ const CartSidebar = () => {
                       <p className="font-medium">{item.name}</p>
                       <p className="text-sm text-muted-foreground">${item.price.toFixed(2)}</p>
                     </div>
-                    <button onClick={() => remove(item.id)} className="text-sm text-muted-foreground hover:underline">Remove</button>
+                    <button onClick={() => remove(item.id)} className="text-sm text-muted-foreground hover:underline">{t("remove")}</button>
                   </div>
                   <div className="mt-3 flex items-center gap-2">
                     <button onClick={() => decrement(item.id)} className="btn-ghost px-3 py-1">−</button>
@@ -48,12 +50,12 @@ const CartSidebar = () => {
         </div>
         <div className="px-6 pt-4 pb-6 border-t space-y-3 pb-[env(safe-area-inset-bottom)]">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Subtotal</span>
+            <span className="text-sm text-muted-foreground">{t("subtotal")}</span>
             <span className="font-medium">${total.toFixed(2)}</span>
           </div>
           <div className="flex gap-3">
-            <button onClick={clear} className="btn-ghost flex-1">Clear</button>
-            <Link to="/checkout" onClick={closeCart} className="btn flex-1 text-center">Proceed to Checkout</Link>
+            <button onClick={clear} className="btn-ghost flex-1">{t("clear")}</button>
+            <Link to="/checkout" onClick={closeCart} className="btn flex-1 text-center">{t("checkout")}</Link>
           </div>
         </div>
       </aside>
