@@ -192,7 +192,7 @@ const Checkout = () => {
         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12">
           <section aria-labelledby="checkout-title">
             <h1 id="checkout-title" className="font-serif text-2xl sm:text-3xl md:text-4xl">Checkout</h1>
-            <form onSubmit={onSubmit} className="mt-6 space-y-6">
+            <form id="checkout-form" onSubmit={onSubmit} className="mt-6 space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <label className="flex flex-col gap-2 text-sm font-medium">
                   Full name
@@ -313,11 +313,6 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <div className="sticky bottom-0 z-10 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-t pt-4">
-                <button disabled={submitting || items.length === 0} className="btn w-full">
-                  {submitting ? 'Processing…' : `Place Order — $${grandTotal.toFixed(2)}`}
-                </button>
-              </div>
             </form>
           </section>
           <aside className="card-lux h-max">
@@ -357,6 +352,14 @@ const Checkout = () => {
                 <span className="font-medium">${grandTotal.toFixed(2)}</span>
               </div>
             </div>
+            <button 
+              type="submit" 
+              form="checkout-form"
+              disabled={submitting || items.length === 0} 
+              className="btn w-full mt-6"
+            >
+              {submitting ? 'Processing…' : `Place Order — $${grandTotal.toFixed(2)}`}
+            </button>
           </aside>
         </div>
       </main>
