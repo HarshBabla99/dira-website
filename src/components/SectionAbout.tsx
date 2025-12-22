@@ -16,13 +16,13 @@ const SectionAbout = () => {
                 {t("ourStory")}
               </h2>
               <h3 className="font-serif text-xl sm:text-2xl mb-4">Meet the Creators</h3>
-              <p className="text-base text-muted-foreground leading-relaxed mb-3">
+              <p className="text-base text-muted-foreground leading-relaxed text-justify mb-3">
                 Dira Naturals was born from a mother-daughter passion for natural skincare. 
                 Sarah and Amelia started experimenting with cold-process soap making in their 
                 home kitchen in 2018, driven by a desire to create gentle, effective products 
                 free from harsh chemicals.
               </p>
-              <p className="text-base text-muted-foreground leading-relaxed">
+              <p className="text-base text-muted-foreground leading-relaxed text-justify">
                 Today, every bar is still handcrafted in small batches at our workshop in 
                 Dar es Salaam, using locally sourced botanicals and time-honored techniques 
                 passed down through generations.
@@ -32,7 +32,7 @@ const SectionAbout = () => {
             {/* Artisanal Section */}
             <div>
               <h3 className="font-serif text-xl sm:text-2xl mb-4">Artisanal. Sustainable. Pure.</h3>
-              <p className="text-base text-muted-foreground leading-relaxed">
+              <p className="text-base text-muted-foreground leading-relaxed text-justify">
                 We craft small-batch soaps using cold-process methods, botanical oils,
                 and mineral-rich clays. Our formulas are free from synthetic dyes and harsh sulfates,
                 designed to nourish skin and calm the senses.
