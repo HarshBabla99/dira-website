@@ -21,7 +21,7 @@ const Footer = () => {
 
         {/* Navigation */}
         <nav className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm text-muted-foreground">
-          <a href="/#about" className="hover:text-foreground transition-colors">{t("about")}</a>
+          <a href="/#about" className="hover:text-foreground transition-colors">{t("ourStory")}</a>
           <a href="/#featured" className="hover:text-foreground transition-colors">{t("featured")}</a>
           <a href="/#testimonials" className="hover:text-foreground transition-colors">{t("testimonials")}</a>
           <Link to="/shop" className="hover:text-foreground transition-colors">{t("shop")}</Link>

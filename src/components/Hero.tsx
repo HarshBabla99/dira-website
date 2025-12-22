@@ -24,7 +24,7 @@ const Hero = () => {
             </p>
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <Link to="/shop" className="btn text-center">{t("shop")} Now</Link>
-              <a href="#about" className="btn-ghost text-center">{t("about")}</a>
+              <a href="#about" className="btn-ghost text-center">{t("ourStory")}</a>
             </div>
           </div>
         </div>
