@@ -53,8 +53,8 @@ const Shop = () => {
       </div>
 
       {/* Quantity & Add Button - Same row, equal widths */}
-      <div className="mt-3 sm:mt-4 flex items-stretch gap-2">
-        <div className="flex-1 flex items-center justify-between border rounded-md">
+      <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-2">
+        <div className="flex items-center justify-between border rounded-md">
           <button
             type="button"
             onClick={() => updateQuantity(p.id, (quantities[p.id] || 1) - 1)}
@@ -82,7 +82,7 @@ const Shop = () => {
           </button>
         </div>
         <button 
-          className="btn flex-1 text-sm py-2" 
+          className="btn text-sm py-2" 
           onClick={() => handleAddToCart(p)}
         >
           Add
