@@ -7,26 +7,55 @@ const SectionAbout = () => {
   return (
     <section id="about" aria-labelledby="about-title" className="section scroll-mt-16 md:scroll-mt-20">
       <div className="container mx-auto px-6">
-        {/* Founders Section */}
-        <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-start mb-6 md:mb-8">
-          <div className="order-2 md:order-1">
-            <h2 id="about-title" className="font-serif text-2xl sm:text-3xl md:text-4xl leading-snug mb-4">
-              {t("ourStory")}
-            </h2>
-            <h3 className="font-serif text-xl sm:text-2xl mb-4">Meet the Creators</h3>
-            <p className="text-base text-muted-foreground leading-relaxed mb-3">
-              Dira Naturals was born from a mother-daughter passion for natural skincare. 
-              Sarah and Amelia started experimenting with cold-process soap making in their 
-              home kitchen in 2018, driven by a desire to create gentle, effective products 
-              free from harsh chemicals.
-            </p>
-            <p className="text-base text-muted-foreground leading-relaxed">
-              Today, every bar is still handcrafted in small batches at our workshop in 
-              Dar es Salaam, using locally sourced botanicals and time-honored techniques 
-              passed down through generations.
-            </p>
+        <div className="grid md:grid-cols-2 gap-6 md:gap-10">
+          {/* Left Column - All Text Content */}
+          <div className="order-2 md:order-1 space-y-8">
+            {/* Our Story & Meet the Creators */}
+            <div>
+              <h2 id="about-title" className="font-serif text-2xl sm:text-3xl md:text-4xl leading-snug mb-4">
+                {t("ourStory")}
+              </h2>
+              <h3 className="font-serif text-xl sm:text-2xl mb-4">Meet the Creators</h3>
+              <p className="text-base text-muted-foreground leading-relaxed mb-3">
+                Dira Naturals was born from a mother-daughter passion for natural skincare. 
+                Sarah and Amelia started experimenting with cold-process soap making in their 
+                home kitchen in 2018, driven by a desire to create gentle, effective products 
+                free from harsh chemicals.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Today, every bar is still handcrafted in small batches at our workshop in 
+                Dar es Salaam, using locally sourced botanicals and time-honored techniques 
+                passed down through generations.
+              </p>
+            </div>
+
+            {/* Artisanal Section */}
+            <div>
+              <h3 className="font-serif text-xl sm:text-2xl mb-4">Artisanal. Sustainable. Pure.</h3>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                We craft small-batch soaps using cold-process methods, botanical oils,
+                and mineral-rich clays. Our formulas are free from synthetic dyes and harsh sulfates,
+                designed to nourish skin and calm the senses.
+              </p>
+              <ul className="mt-5 space-y-2 text-sm sm:text-base text-muted-foreground">
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  Ethically sourced, plant-based ingredients
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  Recyclable, minimal packaging
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  No parabens, no phthalates, no silicones
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="order-1 md:order-2">
+
+          {/* Right Column - Image & Quote */}
+          <div className="order-1 md:order-2 space-y-6">
             <div className="rounded-xl overflow-hidden border shadow-md">
               <img 
                 src={foundersImage} 
@@ -34,35 +63,7 @@ const SectionAbout = () => {
                 className="w-full h-auto object-cover"
               />
             </div>
-          </div>
-        </div>
-
-        {/* Values Section */}
-        <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-start">
-          <div>
-            <h3 className="font-serif text-xl sm:text-2xl mb-4">Artisanal. Sustainable. Pure.</h3>
-            <p className="text-base text-muted-foreground leading-relaxed">
-              We craft small-batch soaps using cold-process methods, botanical oils,
-              and mineral-rich clays. Our formulas are free from synthetic dyes and harsh sulfates,
-              designed to nourish skin and calm the senses.
-            </p>
-            <ul className="mt-5 space-y-2 text-sm sm:text-base text-muted-foreground">
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                Ethically sourced, plant-based ingredients
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                Recyclable, minimal packaging
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                No parabens, no phthalates, no silicones
-              </li>
-            </ul>
-          </div>
-          <div>
-            <div className="card-lux h-full flex flex-col justify-center">
+            <div className="card-lux">
               <blockquote className="text-sm sm:text-base text-muted-foreground italic leading-relaxed">
                 "We believe in quiet luxury—considered materials, elevated textures, and thoughtful details.
                 Each bar is cured for weeks to achieve a gentle, creamy lather."
