@@ -48,7 +48,7 @@ const CartSidebar = () => {
                   <p className="text-base font-medium leading-tight truncate">{item.name}</p>
                   <p className="text-base text-muted-foreground">${item.price.toFixed(2)}</p>
                 </div>
-                <div className="flex flex-col items-end justify-center gap-2">
+                <div className="flex items-center gap-3">
                   {/* Quantity picker */}
                   <div className="flex items-center border rounded-md">
                     <button 
