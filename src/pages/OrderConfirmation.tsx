@@ -87,7 +87,7 @@ const OrderConfirmation = () => {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <BrandHeader />
-      <main className="py-12 sm:py-16 flex-1">
+      <main className="section flex-1">
         <div className="container mx-auto px-6 max-w-2xl">
           <div className="text-center mb-10">
             <CheckCircle className="w-16 h-16 text-primary mx-auto mb-4" />
