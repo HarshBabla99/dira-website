@@ -37,37 +37,37 @@ const CartSidebar = () => {
         </div>
 
         {/* Items */}
-        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+        <div className="flex-1 overflow-y-auto px-6 py-3 space-y-3">
           {items.length === 0 ? (
             <p className="text-base text-muted-foreground">{t("emptyCart")}</p>
           ) : (
             items.map((item) => (
-              <div key={item.id} className="flex gap-4 border-b border-border/50 pb-4">
-                <img src={item.image} alt={item.alt} className="h-16 w-16 rounded-md border object-cover" />
-                <div className="flex-1">
-                  <div className="flex items-start justify-between">
+              <div key={item.id} className="flex gap-3 border-b border-border/50 pb-3">
+                <img src={item.image} alt={item.alt} className="w-14 self-stretch rounded-md border object-cover" />
+                <div className="flex-1 flex flex-col justify-between py-0.5">
+                  <div className="flex items-start justify-between gap-2">
                     <div>
-                      <p className="text-base font-medium">{item.name}</p>
-                      <p className="text-base text-muted-foreground">${item.price.toFixed(2)}</p>
+                      <p className="text-sm font-medium leading-tight">{item.name}</p>
+                      <p className="text-sm text-muted-foreground">${item.price.toFixed(2)}</p>
                     </div>
-                    <button onClick={() => remove(item.id)} className="text-base text-muted-foreground hover:text-foreground transition-colors">{t("remove")}</button>
+                    <button onClick={() => remove(item.id)} className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t("remove")}</button>
                   </div>
-                  {/* Quantity picker - matching Shop style */}
-                  <div className="mt-2 flex items-center border rounded-md w-fit">
+                  {/* Quantity picker */}
+                  <div className="flex items-center border rounded-md w-fit">
                     <button 
                       onClick={() => decrement(item.id)} 
-                      className="p-2 hover:bg-muted/50 transition-colors"
+                      className="p-1.5 hover:bg-muted/50 transition-colors"
                       aria-label="Decrease quantity"
                     >
-                      <Minus className="h-4 w-4" />
+                      <Minus className="h-3 w-3" />
                     </button>
-                    <span className="w-8 text-center text-base">{item.quantity}</span>
+                    <span className="w-6 text-center text-sm">{item.quantity}</span>
                     <button 
                       onClick={() => increment(item.id)} 
-                      className="p-2 hover:bg-muted/50 transition-colors"
+                      className="p-1.5 hover:bg-muted/50 transition-colors"
                       aria-label="Increase quantity"
                     >
-                      <Plus className="h-4 w-4" />
+                      <Plus className="h-3 w-3" />
                     </button>
                   </div>
                 </div>
