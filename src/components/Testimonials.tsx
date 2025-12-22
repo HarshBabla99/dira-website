@@ -4,18 +4,9 @@ const Testimonials = () => {
   const { t } = useLanguage();
 
   const quotes = [
-    {
-      name: "Anaïs",
-      text: "The only soap that feels truly indulgent—soft, creamy lather and a scent that lingers subtly.",
-    },
-    {
-      name: "Marcus",
-      text: "Minimal packaging, maximal experience. My skin feels balanced and calm.",
-    },
-    {
-      name: "Harper",
-      text: "Quiet luxury in a bar. It transformed my morning routine.",
-    },
+    { name: "Anaïs", textKey: "testimonial1" },
+    { name: "Marcus", textKey: "testimonial2" },
+    { name: "Harper", textKey: "testimonial3" },
   ];
 
   return (
@@ -28,7 +19,7 @@ const Testimonials = () => {
           {quotes.map((q) => (
             <figure key={q.name} className="card-lux">
               <blockquote className="text-sm sm:text-base text-muted-foreground italic">
-                "{q.text}"
+                "{t(q.textKey)}"
               </blockquote>
               <figcaption className="mt-4 font-serif font-medium text-foreground">— {q.name}</figcaption>
             </figure>

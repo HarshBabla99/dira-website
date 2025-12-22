@@ -74,7 +74,7 @@ const Shop = () => {
           <p className="mt-1 text-xs sm:text-sm text-muted-foreground line-clamp-2">{p.description}</p>
         </div>
 
-        {/* Quantity & Add Button - Same row, equal widths */}
+        {/* Quantity & Add Button */}
         <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-2">
           <div className={`flex items-center justify-between border rounded-md ${isOutOfStock ? "opacity-50 pointer-events-none" : ""}`}>
             <button
@@ -111,7 +111,7 @@ const Shop = () => {
             onClick={() => handleAddToCart(p)}
             disabled={isOutOfStock}
           >
-            {isOutOfStock ? "Sold Out" : "Add"}
+            {isOutOfStock ? t("soldOut") : t("add")}
           </button>
         </div>
       </article>
@@ -126,9 +126,9 @@ const Shop = () => {
           {/* Signature Collection */}
           <section className="mb-12 sm:mb-16">
             <header className="mb-6 text-center md:text-left">
-              <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl">Signature Collection</h1>
+              <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl">{t("signatureCollection")}</h1>
               <p className="mt-2 text-base text-muted-foreground max-w-2xl mx-auto md:mx-0">
-                Our timeless essentials — crafted for everyday luxury.
+                {t("signatureDescription")}
               </p>
             </header>
             <div className="grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -141,9 +141,9 @@ const Shop = () => {
           {/* Seasonal Collection */}
           <section>
             <header className="mb-6 text-center md:text-left">
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl">Seasonal Collection</h2>
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl">{t("seasonalCollection")}</h2>
               <p className="mt-2 text-base text-muted-foreground max-w-2xl mx-auto md:mx-0">
-                Limited edition bars inspired by the changing seasons.
+                {t("seasonalDescription")}
               </p>
             </header>
             <div className="grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

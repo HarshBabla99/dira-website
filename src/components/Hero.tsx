@@ -25,23 +25,23 @@ const Hero = () => {
             <div className="max-w-2xl space-y-6">
               {/* Tagline */}
               <p className="text-sm sm:text-base tracking-[0.2em] uppercase text-primary font-medium animate-fade-in">
-                Artisanal Skincare
+                {t("artisanalSkincare")}
               </p>
               
               {/* Main heading */}
               <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                Luxury in Every Lather
+                {t("heroTitle")}
               </h1>
               
               {/* Subheading */}
               <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-lg animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                Refined, minimal, and meticulously crafted soaps that elevate your daily ritual.
+                {t("heroSubtitle")}
               </p>
               
               {/* CTA buttons */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 <Link to="/shop" className="btn text-center text-base px-8 py-4 hover-scale">
-                  {t("shop")} Now
+                  {t("shopNow")}
                 </Link>
                 <a href="#about" className="btn-ghost text-center text-base px-8 py-4">
                   {t("ourStory")}
@@ -54,7 +54,7 @@ const Hero = () => {
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in" style={{ animationDelay: '0.5s' }}>
           <a href="#about" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-            <span className="text-xs tracking-widest uppercase">Scroll</span>
+            <span className="text-xs tracking-widest uppercase">{t("scroll")}</span>
             <div className="w-px h-8 bg-border relative overflow-hidden">
               <div className="absolute inset-x-0 h-1/2 bg-primary animate-[slide-down_1.5s_ease-in-out_infinite]" />
             </div>
