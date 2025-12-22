@@ -17,7 +17,10 @@ interface OrderItem {
 interface OrderDetails {
   items: OrderItem[];
   subtotal: number;
+  promoDiscount?: number;
+  promoCode?: string;
   deliveryFee: number;
+  deliveryMethod?: "delivery" | "pickup";
   vat: number;
   total: number;
   paymentMethod: string;
@@ -55,7 +58,10 @@ const OrderConfirmation = () => {
 
   // Provide defaults for optional breakdown fields
   const subtotal = orderDetails.subtotal ?? orderDetails.total;
+  const promoDiscount = orderDetails.promoDiscount ?? 0;
+  const promoCode = orderDetails.promoCode;
   const deliveryFee = orderDetails.deliveryFee ?? 0;
+  const deliveryMethod = orderDetails.deliveryMethod ?? "delivery";
   const vat = orderDetails.vat ?? 0;
 
   return (
@@ -86,9 +92,15 @@ const OrderConfirmation = () => {
                 <span>Subtotal</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
+              {promoDiscount > 0 && (
+                <div className="flex justify-between text-green-600">
+                  <span>Discount {promoCode && `(${promoCode})`}</span>
+                  <span>-${promoDiscount.toFixed(2)}</span>
+                </div>
+              )}
               <div className="flex justify-between">
-                <span>Delivery Fee</span>
-                <span>${deliveryFee.toFixed(2)}</span>
+                <span>{deliveryMethod === "delivery" ? "Delivery Fee" : "Pickup"}</span>
+                <span>{deliveryFee > 0 ? `$${deliveryFee.toFixed(2)}` : "Free"}</span>
               </div>
               <div className="flex justify-between">
                 <span>VAT (18%)</span>
