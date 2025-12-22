@@ -15,7 +15,7 @@ const Footer = () => {
             Dira Naturals
           </Link>
           <p className="mt-2 text-sm text-muted-foreground">
-            Luxury handmade soaps crafted with all‑natural ingredients.
+            {t("footerTagline")}
           </p>
         </div>
 

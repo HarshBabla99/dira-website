@@ -8,10 +8,10 @@ const FeaturedProducts = () => {
     <section id="featured" aria-labelledby="featured-title" className="section scroll-mt-16 md:scroll-mt-20">
       <div className="container mx-auto px-6">
         <h2 id="featured-title" className="font-serif text-2xl sm:text-3xl md:text-4xl leading-snug">
-          {t("featured")} Creations
+          {t("featuredCreations")}
         </h2>
         <p className="mt-3 text-base sm:text-lg text-muted-foreground max-w-2xl">
-          A small preview of our favorite bars—scents that linger, textures that soothe.
+          {t("featuredSubtitle")}
         </p>
         <div className="mt-8 sm:mt-10 grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {products.map((p) => (

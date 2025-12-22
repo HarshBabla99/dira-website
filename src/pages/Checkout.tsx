@@ -1,6 +1,7 @@
 import BrandHeader from "@/components/BrandHeader";
 import Footer from "@/components/Footer";
 import { useCart } from "@/context/CartContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/use-toast";
@@ -28,6 +29,7 @@ const PROMO_CODES: Record<string, { discount: number; type: "percent" | "fixed" 
 
 const Checkout = () => {
   const { items, total: subtotal, clear } = useCart();
+  const { t } = useLanguage();
   const [submitting, setSubmitting] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
   const [mobileWallet, setMobileWallet] = useState<MobileWallet | null>(null);
@@ -238,7 +240,7 @@ const Checkout = () => {
       <BrandHeader />
       <main className="py-8 md:py-12">
         <div className="container mx-auto px-6">
-          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl mb-8">Checkout</h1>
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl mb-8">{t("checkout")}</h1>
           
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left Column - Form */}
@@ -246,10 +248,10 @@ const Checkout = () => {
               <form onSubmit={onSubmit} className="space-y-6">
                 {/* Customer Details */}
                 <div className="space-y-4">
-                  <h2 className="font-serif text-lg">Customer Details</h2>
+                  <h2 className="font-serif text-lg">{t("customerDetails")}</h2>
                   <div className="grid md:grid-cols-2 gap-4">
                     <label className="flex flex-col gap-2 text-sm">
-                      <span className="font-medium">Full name</span>
+                      <span className="font-medium">{t("fullName")}</span>
                       <input
                         name="fullName"
                         required
@@ -258,7 +260,7 @@ const Checkout = () => {
                       />
                     </label>
                     <label className="flex flex-col gap-2 text-sm">
-                      <span className="font-medium">Email</span>
+                      <span className="font-medium">{t("email")}</span>
                       <input
                         name="email"
                         type="email"
@@ -274,7 +276,7 @@ const Checkout = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   {/* Delivery Method */}
                   <fieldset className="border border-border rounded-md p-4">
-                    <legend className="text-sm font-medium px-2">Delivery Method</legend>
+                    <legend className="text-sm font-medium px-2">{t("deliveryMethod")}</legend>
                     <div className="mt-2 space-y-3">
                       <label className="flex items-center gap-3 text-sm cursor-pointer">
                         <input
@@ -285,7 +287,7 @@ const Checkout = () => {
                           onChange={() => setDeliveryMethod("delivery")}
                           className="accent-primary"
                         />
-                        <span>Home Delivery (+${DELIVERY_FEE.toFixed(2)})</span>
+                        <span>{t("homeDelivery")} (+${DELIVERY_FEE.toFixed(2)})</span>
                       </label>
                       <label className="flex items-center gap-3 text-sm cursor-pointer">
                         <input
@@ -296,14 +298,14 @@ const Checkout = () => {
                           onChange={() => setDeliveryMethod("pickup")}
                           className="accent-primary"
                         />
-                        <span>Store Pickup (Free)</span>
+                        <span>{t("storePickup")} ({t("free")})</span>
                       </label>
                     </div>
                   </fieldset>
 
                   {/* Payment Options */}
                   <fieldset className="border border-border rounded-md p-4">
-                    <legend className="text-sm font-medium px-2">Payment</legend>
+                    <legend className="text-sm font-medium px-2">{t("payment")}</legend>
                     <div className="mt-2 space-y-3">
                       <label className="flex items-center gap-3 text-sm cursor-pointer">
                         <input
@@ -314,7 +316,7 @@ const Checkout = () => {
                           onChange={() => setPaymentMethod("cod")}
                           className="accent-primary"
                         />
-                        <span>Pay on Delivery</span>
+                        <span>{t("payOnDelivery")}</span>
                       </label>
                       <label className="flex items-center gap-3 text-sm cursor-pointer">
                         <input
@@ -325,7 +327,7 @@ const Checkout = () => {
                           onChange={() => setPaymentMethod("mobile")}
                           className="accent-primary"
                         />
-                        <span>Mobile Banking</span>
+                        <span>{t("mobileBanking")}</span>
                       </label>
                     </div>
                   </fieldset>
@@ -355,7 +357,7 @@ const Checkout = () => {
                 {/* Address - Only shown for delivery */}
                 {deliveryMethod === "delivery" && (
                   <div className="space-y-4">
-                    <h2 className="font-serif text-lg">Delivery Address</h2>
+                    <h2 className="font-serif text-lg">{t("deliveryAddress")}</h2>
                     <label className="flex flex-col gap-2 text-sm">
                       <span className="font-medium">Address</span>
                       <input
@@ -399,7 +401,7 @@ const Checkout = () => {
 
                 {/* Hidden submit for mobile - actual button is in the right column on desktop */}
                 <button type="submit" className="btn w-full lg:hidden" disabled={submitting || items.length === 0}>
-                  {submitting ? "Processing…" : `Place Order — $${total.toFixed(2)}`}
+                  {submitting ? t("processing") : `${t("placeOrder")} — $${total.toFixed(2)}`}
                 </button>
               </form>
             </section>
@@ -407,10 +409,10 @@ const Checkout = () => {
             {/* Right Column - Order Summary */}
             <aside className="space-y-6">
               <div className="card-lux">
-                <h2 className="font-serif text-lg">Order Summary</h2>
+                <h2 className="font-serif text-lg">{t("orderSummary")}</h2>
                 <div className="mt-4 space-y-4">
                   {items.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">Your cart is empty.</p>
+                    <p className="text-sm text-muted-foreground">{t("emptyCart")}</p>
                   ) : (
                     items.map((i) => (
                       <div key={i.id} className="flex items-center gap-4">
@@ -509,7 +511,7 @@ const Checkout = () => {
                   e.preventDefault();
                 }}
               >
-                {submitting ? "Processing…" : `Place Order — $${total.toFixed(2)}`}
+                {submitting ? t("processing") : `${t("placeOrder")} — $${total.toFixed(2)}`}
               </button>
             </aside>
           </div>
