@@ -48,7 +48,7 @@ const CartSidebar = () => {
             ))
           )}
         </div>
-        <div className="px-6 pt-4 pb-6 border-t space-y-3 pb-[env(safe-area-inset-bottom)]">
+        <div className="px-6 py-4 border-t space-y-3 mb-4">
           <div className="flex items-center justify-between">
             <span className="text-sm text-muted-foreground">{t("subtotal")}</span>
             <span className="font-medium">${total.toFixed(2)}</span>
