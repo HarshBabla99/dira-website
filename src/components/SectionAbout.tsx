@@ -8,7 +8,7 @@ const SectionAbout = () => {
     <section id="about" aria-labelledby="about-title" className="section scroll-mt-16 md:scroll-mt-20">
       <div className="container mx-auto px-6">
         {/* Founders Section */}
-        <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-start mb-12 md:mb-16">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-start mb-6 md:mb-8">
           <div className="order-2 md:order-1">
             <h2 id="about-title" className="font-serif text-2xl sm:text-3xl md:text-4xl leading-snug mb-4">
               {t("ourStory")}
