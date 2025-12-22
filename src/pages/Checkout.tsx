@@ -192,7 +192,7 @@ const Checkout = () => {
         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12">
           <section aria-labelledby="checkout-title">
             <h1 id="checkout-title" className="font-serif text-2xl sm:text-3xl md:text-4xl">Checkout</h1>
-            <form onSubmit={onSubmit} className="mt-6 space-y-6 pb-24">
+            <form onSubmit={onSubmit} className="mt-6 space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <label className="flex flex-col gap-2 text-sm font-medium">
                   Full name
