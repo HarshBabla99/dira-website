@@ -11,16 +11,28 @@ const SHOP_WHATSAPP_NUMBER = "REPLACE_WITH_E164_NUMBER";
 
 type PaymentMethod = "cod" | "mobile";
 type MobileWallet = "airtel" | "tigo" | "mpesa";
+type DeliveryMethod = "delivery" | "pickup";
+
+const DELIVERY_FEE = 5.00;
+const VAT_RATE = 0.18;
 
 const buildWhatsAppLink = (phone: string, message: string) =>
   `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
 const Checkout = () => {
-  const { items, total, clear } = useCart();
+  const { items, total } = useCart();
   const [submitting, setSubmitting] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
   const [mobileWallet, setMobileWallet] = useState<MobileWallet | null>(null);
+  const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod>("delivery");
   const navigate = useNavigate();
+  const { clear } = useCart();
+
+  // Calculate totals
+  const deliveryFee = deliveryMethod === "delivery" ? DELIVERY_FEE : 0;
+  const subtotal = total;
+  const vatAmount = (subtotal + deliveryFee) * VAT_RATE;
+  const grandTotal = subtotal + deliveryFee + vatAmount;
 
   // Basic SEO tags
   useEffect(() => {
@@ -85,6 +97,10 @@ const Checkout = () => {
 
     setSubmitting(true);
 
+    const deliveryInfo = deliveryMethod === "delivery" 
+      ? `Delivery Method: Delivery (+$${DELIVERY_FEE.toFixed(2)})`
+      : "Delivery Method: Pickup";
+
     if (paymentMethod === "cod") {
       const message = [
         "New Order – Pay on Delivery",
@@ -93,7 +109,10 @@ const Checkout = () => {
         "Items:",
         orderLines,
         "",
-        `Total: $${total.toFixed(2)}`,
+        `Subtotal: $${subtotal.toFixed(2)}`,
+        deliveryInfo,
+        `VAT (18%): $${vatAmount.toFixed(2)}`,
+        `Total: $${grandTotal.toFixed(2)}`,
         "Payment Method: Pay on Delivery",
       ].join("\n");
 
@@ -145,7 +164,10 @@ const Checkout = () => {
         "Items:",
         orderLines,
         "",
-        `Total: $${total.toFixed(2)}`,
+        `Subtotal: $${subtotal.toFixed(2)}`,
+        deliveryInfo,
+        `VAT (18%): $${vatAmount.toFixed(2)}`,
+        `Total: $${grandTotal.toFixed(2)}`,
         `Wallet: ${mobileWallet.toUpperCase()}`,
         `Transaction ID: ${txId}`,
       ].join("\n");
@@ -166,13 +188,13 @@ const Checkout = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <BrandHeader />
-      <main className="section">
+      <main className="py-8 sm:py-12">
         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12">
           <section aria-labelledby="checkout-title">
-            <h1 id="checkout-title" className="font-serif text-3xl sm:text-4xl">Checkout</h1>
+            <h1 id="checkout-title" className="font-serif text-2xl sm:text-3xl md:text-4xl">Checkout</h1>
             <form onSubmit={onSubmit} className="mt-6 space-y-6 pb-24">
               <div className="grid md:grid-cols-2 gap-4">
-              <label className="flex flex-col gap-2 text-sm font-medium">
+                <label className="flex flex-col gap-2 text-sm font-medium">
                   Full name
                   <input name="fullName" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="Jane Doe" />
                 </label>
@@ -181,7 +203,7 @@ const Checkout = () => {
                   <input name="email" type="email" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="jane@example.com" />
                 </label>
               </div>
-            <label className="flex flex-col gap-2 text-sm font-medium">
+              <label className="flex flex-col gap-2 text-sm font-medium">
                 Address
                 <input name="address" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="123 Serenity Lane" />
               </label>
@@ -200,11 +222,37 @@ const Checkout = () => {
                 </label>
               </div>
 
-              {/* Payment Options */}
-              <fieldset className="border rounded-md p-4">
-                <legend className="text-sm font-medium">Payment</legend>
+              {/* Delivery Options */}
+              <div className="space-y-3">
+                <span className="text-sm font-medium">Delivery Method</span>
+                <div className="flex gap-4">
+                  <label className="flex items-center gap-3 text-sm">
+                    <input
+                      type="radio"
+                      name="deliveryMethod"
+                      value="delivery"
+                      checked={deliveryMethod === "delivery"}
+                      onChange={() => setDeliveryMethod("delivery")}
+                    />
+                    <span>Delivery (+${DELIVERY_FEE.toFixed(2)})</span>
+                  </label>
+                  <label className="flex items-center gap-3 text-sm">
+                    <input
+                      type="radio"
+                      name="deliveryMethod"
+                      value="pickup"
+                      checked={deliveryMethod === "pickup"}
+                      onChange={() => setDeliveryMethod("pickup")}
+                    />
+                    <span>Pickup (Free)</span>
+                  </label>
+                </div>
+              </div>
 
-                <div className="mt-3 space-y-3">
+              {/* Payment Options */}
+              <div className="space-y-3">
+                <span className="text-sm font-medium">Payment</span>
+                <div className="border rounded-md p-4 space-y-3">
                   <label className="flex items-center gap-3 text-sm">
                     <input
                       type="radio"
@@ -263,11 +311,11 @@ const Checkout = () => {
                     )}
                   </div>
                 </div>
-              </fieldset>
+              </div>
 
               <div className="sticky bottom-0 z-10 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-t pt-4">
                 <button disabled={submitting || items.length === 0} className="btn w-full">
-                  {submitting ? 'Processing…' : `Place Order — $${total.toFixed(2)}`}
+                  {submitting ? 'Processing…' : `Place Order — $${grandTotal.toFixed(2)}`}
                 </button>
               </div>
             </form>
@@ -289,9 +337,25 @@ const Checkout = () => {
                 ))
               )}
             </div>
-            <div className="mt-6 flex items-center justify-between border-t pt-4">
-              <span className="text-sm text-muted-foreground">Total</span>
-              <span className="font-medium">${total.toFixed(2)}</span>
+            <div className="mt-6 border-t pt-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Subtotal</span>
+                <span className="text-sm">${subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">
+                  {deliveryMethod === "delivery" ? "Delivery" : "Pickup"}
+                </span>
+                <span className="text-sm">{deliveryFee > 0 ? `$${deliveryFee.toFixed(2)}` : "Free"}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">VAT (18%)</span>
+                <span className="text-sm">${vatAmount.toFixed(2)}</span>
+              </div>
+              <div className="flex items-center justify-between pt-2 border-t">
+                <span className="font-medium">Total</span>
+                <span className="font-medium">${grandTotal.toFixed(2)}</span>
+              </div>
             </div>
           </aside>
         </div>
