@@ -169,34 +169,34 @@ const Checkout = () => {
       <main className="section">
         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12">
           <section aria-labelledby="checkout-title">
-            <h1 id="checkout-title" className="heading-md">Checkout</h1>
+            <h1 id="checkout-title" className="font-serif text-3xl sm:text-4xl">Checkout</h1>
             <form onSubmit={onSubmit} className="mt-6 space-y-6 pb-24">
               <div className="grid md:grid-cols-2 gap-4">
-                <label className="flex flex-col gap-2 text-sm">
+              <label className="flex flex-col gap-2 text-sm font-medium">
                   Full name
-                  <input name="fullName" required className="border rounded-md px-4 py-3 bg-background" placeholder="Jane Doe" />
+                  <input name="fullName" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="Jane Doe" />
                 </label>
-                <label className="flex flex-col gap-2 text-sm">
+                <label className="flex flex-col gap-2 text-sm font-medium">
                   Email
-                  <input name="email" type="email" required className="border rounded-md px-4 py-3 bg-background" placeholder="jane@example.com" />
+                  <input name="email" type="email" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="jane@example.com" />
                 </label>
               </div>
-              <label className="flex flex-col gap-2 text-sm">
+            <label className="flex flex-col gap-2 text-sm font-medium">
                 Address
-                <input name="address" required className="border rounded-md px-4 py-3 bg-background" placeholder="123 Serenity Lane" />
+                <input name="address" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="123 Serenity Lane" />
               </label>
-              <div className="grid md:grid-cols-3 gap-4">
-                <label className="flex flex-col gap-2 text-sm">
+              <div className="grid sm:grid-cols-3 gap-4">
+                <label className="flex flex-col gap-2 text-sm font-medium">
                   City
-                  <input name="city" required className="border rounded-md px-4 py-3 bg-background" placeholder="San Francisco" />
+                  <input name="city" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="San Francisco" />
                 </label>
-                <label className="flex flex-col gap-2 text-sm">
+                <label className="flex flex-col gap-2 text-sm font-medium">
                   State
-                  <input name="state" required className="border rounded-md px-4 py-3 bg-background" placeholder="CA" />
+                  <input name="state" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="CA" />
                 </label>
-                <label className="flex flex-col gap-2 text-sm">
+                <label className="flex flex-col gap-2 text-sm font-medium">
                   ZIP
-                  <input name="zip" required className="border rounded-md px-4 py-3 bg-background" placeholder="94107" />
+                  <input name="zip" required className="border rounded-lg px-4 py-3 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" placeholder="94107" />
                 </label>
               </div>
 
