@@ -53,12 +53,6 @@ const translations: Record<Language, Record<string, string>> = {
   },
 };
 
-const languageLabels: Record<Language, string> = {
-  en: "EN",
-  sw: "SW",
-  fr: "FR",
-};
-
 export const languageOptions: { value: Language; label: string; full: string }[] = [
   { value: "en", label: "EN", full: "English" },
   { value: "sw", label: "SW", full: "Kiswahili" },
