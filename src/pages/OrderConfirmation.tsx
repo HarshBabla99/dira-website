@@ -4,6 +4,7 @@ import { CheckCircle } from "lucide-react";
 import BrandHeader from "@/components/BrandHeader";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface OrderItem {
   id: string;
@@ -30,6 +31,7 @@ interface OrderDetails {
 const OrderConfirmation = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   
   // Try location.state first, then fall back to localStorage
   const getOrderDetails = (): OrderDetails | null => {
@@ -91,12 +93,12 @@ const OrderConfirmation = () => {
         <div className="container mx-auto px-6 max-w-2xl">
           <div className="text-center mb-10">
             <CheckCircle className="w-16 h-16 text-primary mx-auto mb-4" />
-            <h1 className="font-serif text-3xl sm:text-4xl mb-2">Thank You for Your Order!</h1>
-            <p className="text-muted-foreground">Your order has been received and is being processed.</p>
+            <h1 className="font-serif text-3xl sm:text-4xl mb-2">{t("thankYou")}</h1>
+            <p className="text-muted-foreground">{t("orderReceived")}</p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6 sm:p-8 space-y-6">
-            <h2 className="font-serif text-xl border-b border-border pb-3">Order Summary</h2>
+            <h2 className="font-serif text-xl border-b border-border pb-3">{t("orderSummary")}</h2>
 
             <div className="space-y-3">
               {orderDetails.items.map((item) => (
@@ -109,41 +111,41 @@ const OrderConfirmation = () => {
 
             <div className="border-t border-border pt-4 space-y-2 text-sm">
               <div className="flex justify-between">
-                <span>Subtotal</span>
+                <span>{t("subtotal")}</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               {promoDiscount > 0 && (
                 <div className="flex justify-between text-success">
-                  <span>Discount {promoCode && `(${promoCode})`}</span>
+                  <span>{t("discount")} {promoCode && `(${promoCode})`}</span>
                   <span>-${promoDiscount.toFixed(2)}</span>
                 </div>
               )}
               <div className="flex justify-between">
-                <span>{deliveryMethod === "delivery" ? "Delivery Fee" : "Pickup"}</span>
-                <span>{deliveryFee > 0 ? `$${deliveryFee.toFixed(2)}` : "Free"}</span>
+                <span>{deliveryMethod === "delivery" ? t("delivery") : t("pickup")}</span>
+                <span>{deliveryFee > 0 ? `$${deliveryFee.toFixed(2)}` : t("free")}</span>
               </div>
               <div className="flex justify-between">
-                <span>VAT (18%)</span>
+                <span>{t("vat")} (18%)</span>
                 <span>${vat.toFixed(2)}</span>
               </div>
               <div className="flex justify-between font-semibold text-base pt-2 border-t border-border">
-                <span>Total</span>
+                <span>{t("total")}</span>
                 <span>${orderDetails.total.toFixed(2)}</span>
               </div>
             </div>
 
             <div className="border-t border-border pt-4 text-sm text-muted-foreground space-y-1">
-              <p><strong>Delivery:</strong> {deliveryMethod === "delivery" ? "Home Delivery" : "Store Pickup"}</p>
-              <p><strong>Payment:</strong> {orderDetails.paymentMethod}</p>
+              <p><strong>{t("delivery")}:</strong> {deliveryMethod === "delivery" ? t("homeDelivery") : t("storePickup")}</p>
+              <p><strong>{t("payment")}:</strong> {orderDetails.paymentMethod}</p>
               {orderDetails.transactionId && (
-                <p><strong>Transaction ID:</strong> {orderDetails.transactionId}</p>
+                <p><strong>{t("transactionId")}:</strong> {orderDetails.transactionId}</p>
               )}
             </div>
           </div>
 
           <div className="mt-8 text-center">
             <Link to="/shop">
-              <Button variant="outline" size="lg">Continue Shopping</Button>
+              <Button variant="outline" size="lg">{t("continueShopping")}</Button>
             </Link>
           </div>
         </div>
