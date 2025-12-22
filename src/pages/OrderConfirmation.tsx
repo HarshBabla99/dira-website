@@ -30,7 +30,24 @@ interface OrderDetails {
 const OrderConfirmation = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const orderDetails = location.state as OrderDetails | null;
+  
+  // Try location.state first, then fall back to localStorage
+  const getOrderDetails = (): OrderDetails | null => {
+    if (location.state) {
+      return location.state as OrderDetails;
+    }
+    const stored = localStorage.getItem("lastOrder");
+    if (stored) {
+      try {
+        return JSON.parse(stored) as OrderDetails;
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  };
+
+  const orderDetails = getOrderDetails();
 
   useEffect(() => {
     document.title = "Order Confirmed | Thank You";
