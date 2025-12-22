@@ -7,9 +7,9 @@ const Footer = () => {
 
   return (
     <footer className="border-t bg-secondary/30">
-      <div className="container mx-auto px-6 py-8 grid gap-6 md:grid-cols-3 text-center">
+      <div className="container mx-auto px-6 py-12 md:py-16 grid gap-8 md:grid-cols-3 text-center md:text-left">
         {/* Brand */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center md:items-start">
           <Link to="/" className="flex items-center gap-2 font-serif text-xl tracking-wide">
             <Leaf className="h-5 w-5 text-primary" />
             Dira Naturals
@@ -28,7 +28,7 @@ const Footer = () => {
         </nav>
 
         {/* Contact */}
-        <div className="flex flex-col items-center text-sm text-muted-foreground">
+        <div className="flex flex-col items-center md:items-end text-sm text-muted-foreground">
           <p>hello@diranaturals.com</p>
           <p className="mt-1">© {new Date().getFullYear()} Dira Naturals</p>
         </div>

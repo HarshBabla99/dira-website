@@ -236,7 +236,7 @@ const Checkout = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <BrandHeader />
-      <main className="py-8 sm:py-12">
+      <main className="section">
         <div className="container mx-auto px-6">
           <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl mb-8">Checkout</h1>
           

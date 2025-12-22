@@ -15,9 +15,9 @@ const Hero = () => {
           className="absolute inset-0 h-full w-full object-cover scale-105 animate-[scale-in_20s_ease-out_forwards]"
         />
         
-        {/* Gradient overlays for depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-transparent" />
+        {/* Subtle gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/30 to-transparent" />
         
         {/* Content */}
         <div className="relative z-10 h-full flex flex-col justify-center">
