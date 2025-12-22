@@ -11,9 +11,9 @@ const BrandHeader = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: "#about", label: t("about") },
-    { href: "#featured", label: t("featured") },
-    { href: "#testimonials", label: t("testimonials") },
+    { href: "/#about", label: t("about") },
+    { href: "/#featured", label: t("featured") },
+    { href: "/#testimonials", label: t("testimonials") },
     { href: "/shop", label: t("shop"), isRoute: true },
   ];
 

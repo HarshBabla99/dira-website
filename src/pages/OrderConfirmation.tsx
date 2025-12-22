@@ -96,7 +96,7 @@ const OrderConfirmation = () => {
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               {promoDiscount > 0 && (
-                <div className="flex justify-between text-accent">
+                <div className="flex justify-between text-success">
                   <span>Discount {promoCode && `(${promoCode})`}</span>
                   <span>-${promoDiscount.toFixed(2)}</span>
                 </div>

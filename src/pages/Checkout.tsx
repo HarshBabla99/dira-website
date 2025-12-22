@@ -472,7 +472,7 @@ const Checkout = () => {
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
                   {appliedPromo && (
-                    <div className="flex justify-between text-green-600">
+                    <div className="flex justify-between text-success">
                       <span>Discount ({appliedPromo.code})</span>
                       <span>-${promoDiscount.toFixed(2)}</span>
                     </div>
