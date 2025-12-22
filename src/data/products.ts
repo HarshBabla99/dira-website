@@ -11,6 +11,8 @@ export type Product = {
   image: string;
   alt: string;
   collection?: "signature" | "seasonal";
+  stock?: number; // undefined = unlimited, 0 = out of stock
+  stockLabel?: string; // e.g., "Out of stock", "Only 3 left"
 };
 
 export const products: Product[] = [
@@ -60,6 +62,8 @@ export const products: Product[] = [
     image: charcoalImg,
     alt: "Winter Pine handmade soap bar with forest green tones",
     collection: "seasonal",
+    stock: 3,
+    stockLabel: "Only 3 left",
   },
   {
     id: "honey-oat",
@@ -69,6 +73,8 @@ export const products: Product[] = [
     image: lavenderImg,
     alt: "Honey Oat handmade soap bar with golden hues",
     collection: "seasonal",
+    stock: 0,
+    stockLabel: "Out of stock",
   },
   {
     id: "spiced-orange",
