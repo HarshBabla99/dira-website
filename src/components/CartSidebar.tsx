@@ -1,7 +1,7 @@
 import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { Link } from "react-router-dom";
-import { X, Minus, Plus } from "lucide-react";
+import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 
 const CartSidebar = () => {
   const { isOpen, items, total, increment, decrement, remove, closeCart, clear } = useCart();
@@ -22,7 +22,10 @@ const CartSidebar = () => {
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b">
-          <h3 className="font-serif text-lg">{t("yourCart")}</h3>
+          <h3 className="font-serif text-xl flex items-center gap-2">
+            <ShoppingBag className="h-5 w-5" />
+            {t("cart")}
+          </h3>
           <button 
             type="button" 
             onClick={closeCart} 
@@ -36,7 +39,7 @@ const CartSidebar = () => {
         {/* Items */}
         <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
           {items.length === 0 ? (
-            <p className="text-sm text-muted-foreground">{t("emptyCart")}</p>
+            <p className="text-base text-muted-foreground">{t("emptyCart")}</p>
           ) : (
             items.map((item) => (
               <div key={item.id} className="flex gap-4 border-b border-border/50 pb-4">
@@ -44,10 +47,10 @@ const CartSidebar = () => {
                 <div className="flex-1">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-sm font-medium">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">${item.price.toFixed(2)}</p>
+                      <p className="text-base font-medium">{item.name}</p>
+                      <p className="text-base text-muted-foreground">${item.price.toFixed(2)}</p>
                     </div>
-                    <button onClick={() => remove(item.id)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t("remove")}</button>
+                    <button onClick={() => remove(item.id)} className="text-base text-muted-foreground hover:text-foreground transition-colors">{t("remove")}</button>
                   </div>
                   {/* Quantity picker - matching Shop style */}
                   <div className="mt-2 flex items-center border rounded-md w-fit">
@@ -58,7 +61,7 @@ const CartSidebar = () => {
                     >
                       <Minus className="h-4 w-4" />
                     </button>
-                    <span className="w-8 text-center text-sm">{item.quantity}</span>
+                    <span className="w-8 text-center text-base">{item.quantity}</span>
                     <button 
                       onClick={() => increment(item.id)} 
                       className="p-2 hover:bg-muted/50 transition-colors"
@@ -76,12 +79,12 @@ const CartSidebar = () => {
         {/* Footer */}
         <div className="px-6 py-4 border-t space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">{t("subtotal")}</span>
-            <span className="text-sm font-medium">${total.toFixed(2)}</span>
+            <span className="text-base text-muted-foreground">{t("subtotal")}</span>
+            <span className="text-base font-medium">${total.toFixed(2)}</span>
           </div>
           <div className="flex gap-3">
-            <button onClick={clear} className="btn-ghost flex-1 text-sm">{t("clear")}</button>
-            <Link to="/checkout" onClick={closeCart} className="btn flex-1 text-center text-sm">{t("checkout")}</Link>
+            <button onClick={clear} className="btn-ghost flex-1 text-base">{t("clear")}</button>
+            <Link to="/checkout" onClick={closeCart} className="btn flex-1 text-center text-base">{t("checkout")}</Link>
           </div>
         </div>
       </aside>
