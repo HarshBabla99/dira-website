@@ -4,9 +4,9 @@ const Testimonials = () => {
   const { t } = useLanguage();
 
   const quotes = [
-    { name: "Anaïs", textKey: "testimonial1" },
-    { name: "Marcus", textKey: "testimonial2" },
-    { name: "Harper", textKey: "testimonial3" },
+    { name: "Jack", textKey: "testimonial1" },
+    { name: "Mariam", textKey: "testimonial2" },
+    { name: "Abdul", textKey: "testimonial3" },
   ];
 
   return (

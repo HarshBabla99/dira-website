@@ -100,13 +100,13 @@ const Checkout = () => {
     const email = String(fd.get("email") || "").trim();
     const address = String(fd.get("address") || "").trim();
     const city = String(fd.get("city") || "").trim();
-    const state = String(fd.get("state") || "").trim();
-    const zip = String(fd.get("zip") || "").trim();
+    const region = String(fd.get("region") || "").trim();
+    const pobox = String(fd.get("pobox") || "").trim();
 
     const orderLines = items.map((i) => `${i.name} x${i.quantity} - $${(i.price * i.quantity).toFixed(2)}`).join("\n");
 
     const addressDetails = deliveryMethod === "delivery" 
-      ? `\nAddress: ${address}, ${city}, ${state} ${zip}`
+      ? `\nAddress: ${address}, ${city}, ${region} ${pobox}`
       : "\nPickup at store";
 
     const baseDetails = `Customer: ${fullName}\nEmail: ${email}${addressDetails}`;
@@ -364,7 +364,7 @@ const Checkout = () => {
                         name="address"
                         required={deliveryMethod === "delivery"}
                         className="border border-border rounded-md px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-ring"
-                        placeholder="123 Serenity Lane"
+                        placeholder="123 Kisutu Street"
                       />
                     </label>
                     <div className="grid md:grid-cols-3 gap-4">
@@ -374,25 +374,25 @@ const Checkout = () => {
                           name="city"
                           required={deliveryMethod === "delivery"}
                           className="border border-border rounded-md px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-ring"
-                          placeholder="San Francisco"
+                          placeholder="Dar es Salaam"
                         />
                       </label>
                       <label className="flex flex-col gap-2 text-sm">
-                        <span className="font-medium">State</span>
+                        <span className="font-medium">Region</span>
                         <input
-                          name="state"
+                          name="region"
                           required={deliveryMethod === "delivery"}
                           className="border border-border rounded-md px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-ring"
-                          placeholder="CA"
+                          placeholder="Dar es Salaam"
                         />
                       </label>
                       <label className="flex flex-col gap-2 text-sm">
-                        <span className="font-medium">ZIP</span>
+                        <span className="font-medium">P.O. Box</span>
                         <input
-                          name="zip"
+                          name="pobox"
                           required={deliveryMethod === "delivery"}
                           className="border border-border rounded-md px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-ring"
-                          placeholder="94107"
+                          placeholder="12345"
                         />
                       </label>
                     </div>
