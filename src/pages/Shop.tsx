@@ -67,15 +67,13 @@ const Shop = () => {
           <img src={p.image} alt={p.alt} loading="lazy" className="h-full w-full object-cover" />
         </div>
         <div className="mt-3 sm:mt-4 flex-1">
-          <div className="flex items-start justify-between gap-2">
-            <h3 className="font-serif text-base sm:text-lg leading-tight">{p.name}</h3>
-            <span className="shrink-0 font-medium text-sm sm:text-base">${p.price.toFixed(2)}</span>
-          </div>
+          <h3 className="font-serif text-base sm:text-lg leading-tight">{p.name}</h3>
+          <span className="font-medium text-sm sm:text-base">${p.price.toFixed(2)}</span>
           <p className="mt-1 text-xs sm:text-sm text-muted-foreground line-clamp-2">{p.description}</p>
         </div>
 
         {/* Quantity & Add Button */}
-        <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-2">
+        <div className="mt-3 sm:mt-4 flex flex-col sm:grid sm:grid-cols-2 gap-2">
           <div className={`flex items-center justify-between border rounded-md ${isOutOfStock ? "opacity-50 pointer-events-none" : ""}`}>
             <button
               type="button"
