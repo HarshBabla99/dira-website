@@ -4,7 +4,7 @@ import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 
 // NOTE: Replace with your shop's WhatsApp number in E.164 format (no + sign), e.g., "255712345678"
 // In production, consider storing this in Supabase secrets and reading it via an Edge Function.
