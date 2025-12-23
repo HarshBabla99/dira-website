@@ -240,10 +240,10 @@ const Checkout = () => {
       <BrandHeader />
       <main className="py-8 md:py-12">
         <div className="container mx-auto px-6">
-          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl mb-8">{t("checkout")}</h1>
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl mb-6 lg:mb-8">{t("checkout")}</h1>
           
           {/* Mobile: Order Summary first, then form */}
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-12">
             {/* Order Summary - Shows first on mobile, second on desktop */}
             <aside className="order-1 lg:order-2 space-y-6">
               <div className="card-lux">
@@ -355,7 +355,7 @@ const Checkout = () => {
 
             {/* Form Section - Shows second on mobile, first on desktop */}
             <section aria-labelledby="checkout-form" className="order-2 lg:order-1">
-              <form onSubmit={onSubmit} className="space-y-6">
+              <form id="checkout-form" onSubmit={onSubmit} className="space-y-6">
                 {/* Customer Details */}
                 <div className="space-y-4">
                   <h2 className="font-serif text-lg">{t("customerDetails")}</h2>
