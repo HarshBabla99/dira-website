@@ -21,7 +21,7 @@ const BrandHeader = () => {
 
   return (
     <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b">
-      <div className="container mx-auto px-6 h-16 flex items-center justify-between relative">
+      <div className="container mx-auto px-6 h-16 flex items-center justify-between">
         {/* Brand */}
         <Link to="/" className="flex items-center gap-2 font-serif text-xl tracking-wide">
           <Leaf className="h-5 w-5 text-primary" />
@@ -29,8 +29,8 @@ const BrandHeader = () => {
           <span className="xs:hidden">Dira</span>
         </Link>
 
-        {/* Desktop Nav - Centered */}
-        <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) =>
             link.isRoute ? (
               <Link key={link.href} to={link.href} className="story-link text-base font-medium">
